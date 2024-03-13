@@ -1,0 +1,399 @@
+Analysis & Synthesis report for test3
+Wed Mar 13 14:05:52 2024
+Quartus Prime Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Parallel Compilation
+  5. Analysis & Synthesis IP Cores Summary
+  6. Analysis & Synthesis Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2020  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details, at
+https://fpgasoftware.intel.com/eula.
+
+
+
++----------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                     ;
++------------------------------------+---------------------------------------------+
+; Analysis & Synthesis Status        ; Failed - Wed Mar 13 14:05:52 2024           ;
+; Quartus Prime Version              ; 20.1.1 Build 720 11/11/2020 SJ Lite Edition ;
+; Revision Name                      ; test3                                       ;
+; Top-level Entity Name              ; switch_top                                  ;
+; Family                             ; MAX 10                                      ;
+; Total logic elements               ; N/A until Partition Merge                   ;
+;     Total combinational functions  ; N/A until Partition Merge                   ;
+;     Dedicated logic registers      ; N/A until Partition Merge                   ;
+; Total registers                    ; N/A until Partition Merge                   ;
+; Total pins                         ; N/A until Partition Merge                   ;
+; Total virtual pins                 ; N/A until Partition Merge                   ;
+; Total memory bits                  ; N/A until Partition Merge                   ;
+; Embedded Multiplier 9-bit elements ; N/A until Partition Merge                   ;
+; Total PLLs                         ; N/A until Partition Merge                   ;
+; UFM blocks                         ; N/A until Partition Merge                   ;
+; ADC blocks                         ; N/A until Partition Merge                   ;
++------------------------------------+---------------------------------------------+
+
+
++------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                              ;
++------------------------------------------------------------------+--------------------+--------------------+
+; Option                                                           ; Setting            ; Default Value      ;
++------------------------------------------------------------------+--------------------+--------------------+
+; Device                                                           ; 10M08DAF484C8G     ;                    ;
+; Top-level entity name                                            ; switch_top         ; test3              ;
+; Family name                                                      ; MAX 10             ; Cyclone IV GX      ;
+; Use smart compilation                                            ; Off                ; Off                ;
+; Enable parallel Assembler and Timing Analyzer during compilation ; On                 ; On                 ;
+; Enable compact report table                                      ; Off                ; Off                ;
+; Restructure Multiplexers                                         ; Auto               ; Auto               ;
+; Create Debugging Nodes for IP Cores                              ; Off                ; Off                ;
+; Preserve fewer node names                                        ; On                 ; On                 ;
+; Intel FPGA IP Evaluation Mode                                    ; Enable             ; Enable             ;
+; Verilog Version                                                  ; Verilog_2001       ; Verilog_2001       ;
+; VHDL Version                                                     ; VHDL_1993          ; VHDL_1993          ;
+; State Machine Processing                                         ; Auto               ; Auto               ;
+; Safe State Machine                                               ; Off                ; Off                ;
+; Extract Verilog State Machines                                   ; On                 ; On                 ;
+; Extract VHDL State Machines                                      ; On                 ; On                 ;
+; Ignore Verilog initial constructs                                ; Off                ; Off                ;
+; Iteration limit for constant Verilog loops                       ; 5000               ; 5000               ;
+; Iteration limit for non-constant Verilog loops                   ; 250                ; 250                ;
+; Add Pass-Through Logic to Inferred RAMs                          ; On                 ; On                 ;
+; Infer RAMs from Raw Logic                                        ; On                 ; On                 ;
+; Parallel Synthesis                                               ; On                 ; On                 ;
+; DSP Block Balancing                                              ; Auto               ; Auto               ;
+; NOT Gate Push-Back                                               ; On                 ; On                 ;
+; Power-Up Don't Care                                              ; On                 ; On                 ;
+; Remove Redundant Logic Cells                                     ; Off                ; Off                ;
+; Remove Duplicate Registers                                       ; On                 ; On                 ;
+; Ignore CARRY Buffers                                             ; Off                ; Off                ;
+; Ignore CASCADE Buffers                                           ; Off                ; Off                ;
+; Ignore GLOBAL Buffers                                            ; Off                ; Off                ;
+; Ignore ROW GLOBAL Buffers                                        ; Off                ; Off                ;
+; Ignore LCELL Buffers                                             ; Off                ; Off                ;
+; Ignore SOFT Buffers                                              ; On                 ; On                 ;
+; Limit AHDL Integers to 32 Bits                                   ; Off                ; Off                ;
+; Optimization Technique                                           ; Balanced           ; Balanced           ;
+; Carry Chain Length                                               ; 70                 ; 70                 ;
+; Auto Carry Chains                                                ; On                 ; On                 ;
+; Auto Open-Drain Pins                                             ; On                 ; On                 ;
+; Perform WYSIWYG Primitive Resynthesis                            ; Off                ; Off                ;
+; Auto ROM Replacement                                             ; On                 ; On                 ;
+; Auto RAM Replacement                                             ; On                 ; On                 ;
+; Auto DSP Block Replacement                                       ; On                 ; On                 ;
+; Auto Shift Register Replacement                                  ; Auto               ; Auto               ;
+; Allow Shift Register Merging across Hierarchies                  ; Auto               ; Auto               ;
+; Auto Clock Enable Replacement                                    ; On                 ; On                 ;
+; Strict RAM Replacement                                           ; Off                ; Off                ;
+; Allow Synchronous Control Signals                                ; On                 ; On                 ;
+; Force Use of Synchronous Clear Signals                           ; Off                ; Off                ;
+; Auto RAM Block Balancing                                         ; On                 ; On                 ;
+; Auto RAM to Logic Cell Conversion                                ; Off                ; Off                ;
+; Auto Resource Sharing                                            ; Off                ; Off                ;
+; Allow Any RAM Size For Recognition                               ; Off                ; Off                ;
+; Allow Any ROM Size For Recognition                               ; Off                ; Off                ;
+; Allow Any Shift Register Size For Recognition                    ; Off                ; Off                ;
+; Use LogicLock Constraints during Resource Balancing              ; On                 ; On                 ;
+; Ignore translate_off and synthesis_off directives                ; Off                ; Off                ;
+; Timing-Driven Synthesis                                          ; On                 ; On                 ;
+; Report Parameter Settings                                        ; On                 ; On                 ;
+; Report Source Assignments                                        ; On                 ; On                 ;
+; Report Connectivity Checks                                       ; On                 ; On                 ;
+; Ignore Maximum Fan-Out Assignments                               ; Off                ; Off                ;
+; Synchronization Register Chain Length                            ; 2                  ; 2                  ;
+; Power Optimization During Synthesis                              ; Normal compilation ; Normal compilation ;
+; HDL message level                                                ; Level2             ; Level2             ;
+; Suppress Register Optimization Related Messages                  ; Off                ; Off                ;
+; Number of Removed Registers Reported in Synthesis Report         ; 5000               ; 5000               ;
+; Number of Swept Nodes Reported in Synthesis Report               ; 5000               ; 5000               ;
+; Number of Inverted Registers Reported in Synthesis Report        ; 100                ; 100                ;
+; Clock MUX Protection                                             ; On                 ; On                 ;
+; Auto Gated Clock Conversion                                      ; Off                ; Off                ;
+; Block Design Naming                                              ; Auto               ; Auto               ;
+; SDC constraint protection                                        ; Off                ; Off                ;
+; Synthesis Effort                                                 ; Auto               ; Auto               ;
+; Shift Register Replacement - Allow Asynchronous Clear Signal     ; On                 ; On                 ;
+; Pre-Mapping Resynthesis Optimization                             ; Off                ; Off                ;
+; Analysis & Synthesis Message Level                               ; Medium             ; Medium             ;
+; Disable Register Merging Across Hierarchies                      ; Auto               ; Auto               ;
+; Resource Aware Inference For Block RAM                           ; On                 ; On                 ;
++------------------------------------------------------------------+--------------------+--------------------+
+
+
++------------------------------------------+
+; Parallel Compilation                     ;
++----------------------------+-------------+
+; Processors                 ; Number      ;
++----------------------------+-------------+
+; Number detected on machine ; 8           ;
+; Maximum allowed            ; 4           ;
+;                            ;             ;
+; Average used               ; 1.00        ;
+; Maximum used               ; 1           ;
+;                            ;             ;
+; Usage by Processor         ; % Time Used ;
+;     Processor 1            ; 100.0%      ;
++----------------------------+-------------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis IP Cores Summary                                                                                                                         ;
++--------+-----------------------+---------+--------------+--------------+--------------------------------------------------------------------+-----------------+
+; Vendor ; IP Core Name          ; Version ; Release Date ; License Type ; Entity Instance                                                    ; IP Include File ;
++--------+-----------------------+---------+--------------+--------------+--------------------------------------------------------------------+-----------------+
+; Altera ; FIFO                  ; 10.1    ; N/A          ; N/A          ; |switch_top|transceivers:GEx4|clk_decoup:\decoup:0:rx|clksync:fifo ; clksync.vhd     ;
+; Altera ; FIFO                  ; 10.1    ; N/A          ; N/A          ; |switch_top|transceivers:GEx4|clk_decoup:\decoup:0:tx|clksync:fifo ; clksync.vhd     ;
+; Altera ; FIFO                  ; 10.1    ; N/A          ; N/A          ; |switch_top|transceivers:GEx4|clk_decoup:\decoup:1:rx|clksync:fifo ; clksync.vhd     ;
+; Altera ; FIFO                  ; 10.1    ; N/A          ; N/A          ; |switch_top|transceivers:GEx4|clk_decoup:\decoup:1:tx|clksync:fifo ; clksync.vhd     ;
+; Altera ; FIFO                  ; 10.1    ; N/A          ; N/A          ; |switch_top|transceivers:GEx4|clk_decoup:\decoup:2:rx|clksync:fifo ; clksync.vhd     ;
+; Altera ; FIFO                  ; 10.1    ; N/A          ; N/A          ; |switch_top|transceivers:GEx4|clk_decoup:\decoup:2:tx|clksync:fifo ; clksync.vhd     ;
+; Altera ; FIFO                  ; 10.1    ; N/A          ; N/A          ; |switch_top|transceivers:GEx4|clk_decoup:\decoup:3:rx|clksync:fifo ; clksync.vhd     ;
+; Altera ; FIFO                  ; 10.1    ; N/A          ; N/A          ; |switch_top|transceivers:GEx4|clk_decoup:\decoup:3:tx|clksync:fifo ; clksync.vhd     ;
+; Altera ; Triple Speed Ethernet ; 10.1    ; N/A          ; N/A          ; |switch_top|transceivers:GEx4|tse:\gx:0:GE                         ; tse.vhd         ;
+; Altera ; ALTPLL                ; 10.1    ; N/A          ; N/A          ; |switch_top|transceivers:GEx4|clkgen:pll                           ; clkgen.vhd      ;
++--------+-----------------------+---------+--------------+--------------+--------------------------------------------------------------------+-----------------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus Prime Analysis & Synthesis
+    Info: Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
+    Info: Processing started: Wed Mar 13 14:05:33 2024
+Info: Command: quartus_map --read_settings_files=on --write_settings_files=off de4_switch -c test3
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
+Info (12021): Found 2 design units, including 1 entities, in source file transceivers.vhd
+    Info (12022): Found design unit 1: transceivers-Behavioral File: C:/Users/rieko/Downloads/de4_switch_restored/transceivers.vhd Line: 39
+    Info (12023): Found entity 1: transceivers File: C:/Users/rieko/Downloads/de4_switch_restored/transceivers.vhd Line: 10
+Info (12021): Found 2 design units, including 1 entities, in source file prb.vhd
+    Info (12022): Found design unit 1: prb-SYN File: C:/Users/rieko/Downloads/de4_switch_restored/prb.vhd Line: 51
+    Info (12023): Found entity 1: prb File: C:/Users/rieko/Downloads/de4_switch_restored/prb.vhd Line: 42
+Info (12021): Found 2 design units, including 1 entities, in source file clkgen.vhd
+    Info (12022): Found design unit 1: clkgen-SYN File: C:/Users/rieko/Downloads/de4_switch_restored/clkgen.vhd Line: 53
+    Info (12023): Found entity 1: clkgen File: C:/Users/rieko/Downloads/de4_switch_restored/clkgen.vhd Line: 42
+Info (12021): Found 2 design units, including 1 entities, in source file tse.vhd
+    Info (12022): Found design unit 1: tse-SYN File: C:/Users/rieko/Downloads/de4_switch_restored/tse.vhd Line: 66
+    Info (12023): Found entity 1: tse File: C:/Users/rieko/Downloads/de4_switch_restored/tse.vhd Line: 35
+Info (12021): Found 2 design units, including 1 entities, in source file mdio.vhd
+    Info (12022): Found design unit 1: mdio-arch File: C:/Users/rieko/Downloads/de4_switch_restored/mdio.vhd Line: 28
+    Info (12023): Found entity 1: mdio File: C:/Users/rieko/Downloads/de4_switch_restored/mdio.vhd Line: 5
+Info (12021): Found 2 design units, including 1 entities, in source file phy_setup.vhd
+    Info (12022): Found design unit 1: phy_setup-arch File: C:/Users/rieko/Downloads/de4_switch_restored/phy_setup.vhd Line: 19
+    Info (12023): Found entity 1: phy_setup File: C:/Users/rieko/Downloads/de4_switch_restored/phy_setup.vhd Line: 5
+Info (12021): Found 2 design units, including 1 entities, in source file switch_top.vhd
+    Info (12022): Found design unit 1: switch_top-arch File: C:/Users/rieko/Downloads/de4_switch_restored/switch_top.vhd Line: 21
+    Info (12023): Found entity 1: switch_top File: C:/Users/rieko/Downloads/de4_switch_restored/switch_top.vhd Line: 5
+Info (12021): Found 2 design units, including 1 entities, in source file clksync.vhd
+    Info (12022): Found design unit 1: clksync-SYN File: C:/Users/rieko/Downloads/de4_switch_restored/clksync.vhd Line: 60
+    Info (12023): Found entity 1: clksync File: C:/Users/rieko/Downloads/de4_switch_restored/clksync.vhd Line: 42
+Info (12021): Found 2 design units, including 1 entities, in source file switchcore.vhd
+    Info (12022): Found design unit 1: switchcore-arch File: C:/Users/rieko/Downloads/de4_switch_restored/switchcore.vhd Line: 24
+    Info (12023): Found entity 1: switchcore File: C:/Users/rieko/Downloads/de4_switch_restored/switchcore.vhd Line: 5
+Info (12021): Found 2 design units, including 1 entities, in source file clk_decoup.vhd
+    Info (12022): Found design unit 1: clk_decoup-arch File: C:/Users/rieko/Downloads/de4_switch_restored/clk_decoup.vhd Line: 24
+    Info (12023): Found entity 1: clk_decoup File: C:/Users/rieko/Downloads/de4_switch_restored/clk_decoup.vhd Line: 10
+Info (12127): Elaborating entity "switch_top" for the top level hierarchy
+Info (12128): Elaborating entity "switchcore" for hierarchy "switchcore:sw_core" File: C:/Users/rieko/Downloads/de4_switch_restored/switch_top.vhd Line: 97
+Warning (10873): Using initial value X (don't care) for net "tx_data[31..16]" at switchcore.vhd(16) File: C:/Users/rieko/Downloads/de4_switch_restored/switchcore.vhd Line: 16
+Warning (10873): Using initial value X (don't care) for net "tx_ctrl[3..2]" at switchcore.vhd(17) File: C:/Users/rieko/Downloads/de4_switch_restored/switchcore.vhd Line: 17
+Info (12128): Elaborating entity "transceivers" for hierarchy "transceivers:GEx4" File: C:/Users/rieko/Downloads/de4_switch_restored/switch_top.vhd Line: 100
+Warning (10541): VHDL Signal Declaration warning at transceivers.vhd(19): used implicit default value for signal "link_sync" because signal was never assigned a value or an explicit default value. Use of implicit default value may introduce unintended design optimizations. File: C:/Users/rieko/Downloads/de4_switch_restored/transceivers.vhd Line: 19
+Warning (10036): Verilog HDL or VHDL warning at transceivers.vhd(78): object "gmii_rx_err" assigned a value but never read File: C:/Users/rieko/Downloads/de4_switch_restored/transceivers.vhd Line: 78
+Warning (10036): Verilog HDL or VHDL warning at transceivers.vhd(81): object "led_an" assigned a value but never read File: C:/Users/rieko/Downloads/de4_switch_restored/transceivers.vhd Line: 81
+Warning (10036): Verilog HDL or VHDL warning at transceivers.vhd(82): object "led_disp_err" assigned a value but never read File: C:/Users/rieko/Downloads/de4_switch_restored/transceivers.vhd Line: 82
+Warning (10036): Verilog HDL or VHDL warning at transceivers.vhd(83): object "led_char_err" assigned a value but never read File: C:/Users/rieko/Downloads/de4_switch_restored/transceivers.vhd Line: 83
+Warning (10036): Verilog HDL or VHDL warning at transceivers.vhd(84): object "led_link" assigned a value but never read File: C:/Users/rieko/Downloads/de4_switch_restored/transceivers.vhd Line: 84
+Warning (10036): Verilog HDL or VHDL warning at transceivers.vhd(85): object "rx_recovclkout" assigned a value but never read File: C:/Users/rieko/Downloads/de4_switch_restored/transceivers.vhd Line: 85
+Warning (10036): Verilog HDL or VHDL warning at transceivers.vhd(87): object "readdata" assigned a value but never read File: C:/Users/rieko/Downloads/de4_switch_restored/transceivers.vhd Line: 87
+Warning (10036): Verilog HDL or VHDL warning at transceivers.vhd(88): object "waitrequest" assigned a value but never read File: C:/Users/rieko/Downloads/de4_switch_restored/transceivers.vhd Line: 88
+Warning (10541): VHDL Signal Declaration warning at transceivers.vhd(92): used implicit default value for signal "gmii_tx_err" because signal was never assigned a value or an explicit default value. Use of implicit default value may introduce unintended design optimizations. File: C:/Users/rieko/Downloads/de4_switch_restored/transceivers.vhd Line: 92
+Warning (10036): Verilog HDL or VHDL warning at transceivers.vhd(125): object "probe" assigned a value but never read File: C:/Users/rieko/Downloads/de4_switch_restored/transceivers.vhd Line: 125
+Warning (10541): VHDL Signal Declaration warning at transceivers.vhd(164): used implicit default value for signal "tx_overflow" because signal was never assigned a value or an explicit default value. Use of implicit default value may introduce unintended design optimizations. File: C:/Users/rieko/Downloads/de4_switch_restored/transceivers.vhd Line: 164
+Warning (10541): VHDL Signal Declaration warning at transceivers.vhd(165): used implicit default value for signal "tx_underrun" because signal was never assigned a value or an explicit default value. Use of implicit default value may introduce unintended design optimizations. File: C:/Users/rieko/Downloads/de4_switch_restored/transceivers.vhd Line: 165
+Warning (10541): VHDL Signal Declaration warning at transceivers.vhd(166): used implicit default value for signal "rx_overflow" because signal was never assigned a value or an explicit default value. Use of implicit default value may introduce unintended design optimizations. File: C:/Users/rieko/Downloads/de4_switch_restored/transceivers.vhd Line: 166
+Warning (10541): VHDL Signal Declaration warning at transceivers.vhd(167): used implicit default value for signal "rx_underrun" because signal was never assigned a value or an explicit default value. Use of implicit default value may introduce unintended design optimizations. File: C:/Users/rieko/Downloads/de4_switch_restored/transceivers.vhd Line: 167
+Info (12128): Elaborating entity "clkgen" for hierarchy "transceivers:GEx4|clkgen:pll" File: C:/Users/rieko/Downloads/de4_switch_restored/transceivers.vhd Line: 194
+Info (12128): Elaborating entity "altpll" for hierarchy "transceivers:GEx4|clkgen:pll|altpll:altpll_component" File: C:/Users/rieko/Downloads/de4_switch_restored/clkgen.vhd Line: 148
+Info (12130): Elaborated megafunction instantiation "transceivers:GEx4|clkgen:pll|altpll:altpll_component" File: C:/Users/rieko/Downloads/de4_switch_restored/clkgen.vhd Line: 148
+Info (12133): Instantiated megafunction "transceivers:GEx4|clkgen:pll|altpll:altpll_component" with the following parameter: File: C:/Users/rieko/Downloads/de4_switch_restored/clkgen.vhd Line: 148
+    Info (12134): Parameter "bandwidth_type" = "AUTO"
+    Info (12134): Parameter "clk0_divide_by" = "4"
+    Info (12134): Parameter "clk0_duty_cycle" = "50"
+    Info (12134): Parameter "clk0_multiply_by" = "5"
+    Info (12134): Parameter "clk0_phase_shift" = "0"
+    Info (12134): Parameter "clk1_divide_by" = "5"
+    Info (12134): Parameter "clk1_duty_cycle" = "50"
+    Info (12134): Parameter "clk1_multiply_by" = "2"
+    Info (12134): Parameter "clk1_phase_shift" = "0"
+    Info (12134): Parameter "compensate_clock" = "CLK0"
+    Info (12134): Parameter "inclk0_input_frequency" = "10000"
+    Info (12134): Parameter "intended_device_family" = "Stratix IV"
+    Info (12134): Parameter "lpm_hint" = "CBX_MODULE_PREFIX=clkgen"
+    Info (12134): Parameter "lpm_type" = "altpll"
+    Info (12134): Parameter "operation_mode" = "NORMAL"
+    Info (12134): Parameter "pll_type" = "AUTO"
+    Info (12134): Parameter "port_activeclock" = "PORT_UNUSED"
+    Info (12134): Parameter "port_areset" = "PORT_UNUSED"
+    Info (12134): Parameter "port_clkbad0" = "PORT_UNUSED"
+    Info (12134): Parameter "port_clkbad1" = "PORT_UNUSED"
+    Info (12134): Parameter "port_clkloss" = "PORT_UNUSED"
+    Info (12134): Parameter "port_clkswitch" = "PORT_UNUSED"
+    Info (12134): Parameter "port_configupdate" = "PORT_UNUSED"
+    Info (12134): Parameter "port_fbin" = "PORT_UNUSED"
+    Info (12134): Parameter "port_fbout" = "PORT_UNUSED"
+    Info (12134): Parameter "port_inclk0" = "PORT_USED"
+    Info (12134): Parameter "port_inclk1" = "PORT_UNUSED"
+    Info (12134): Parameter "port_locked" = "PORT_USED"
+    Info (12134): Parameter "port_pfdena" = "PORT_UNUSED"
+    Info (12134): Parameter "port_phasecounterselect" = "PORT_UNUSED"
+    Info (12134): Parameter "port_phasedone" = "PORT_UNUSED"
+    Info (12134): Parameter "port_phasestep" = "PORT_UNUSED"
+    Info (12134): Parameter "port_phaseupdown" = "PORT_UNUSED"
+    Info (12134): Parameter "port_pllena" = "PORT_UNUSED"
+    Info (12134): Parameter "port_scanaclr" = "PORT_UNUSED"
+    Info (12134): Parameter "port_scanclk" = "PORT_UNUSED"
+    Info (12134): Parameter "port_scanclkena" = "PORT_UNUSED"
+    Info (12134): Parameter "port_scandata" = "PORT_UNUSED"
+    Info (12134): Parameter "port_scandataout" = "PORT_UNUSED"
+    Info (12134): Parameter "port_scandone" = "PORT_UNUSED"
+    Info (12134): Parameter "port_scanread" = "PORT_UNUSED"
+    Info (12134): Parameter "port_scanwrite" = "PORT_UNUSED"
+    Info (12134): Parameter "port_clk0" = "PORT_USED"
+    Info (12134): Parameter "port_clk1" = "PORT_USED"
+    Info (12134): Parameter "port_clk2" = "PORT_UNUSED"
+    Info (12134): Parameter "port_clk3" = "PORT_UNUSED"
+    Info (12134): Parameter "port_clk4" = "PORT_UNUSED"
+    Info (12134): Parameter "port_clk5" = "PORT_UNUSED"
+    Info (12134): Parameter "port_clk6" = "PORT_UNUSED"
+    Info (12134): Parameter "port_clk7" = "PORT_UNUSED"
+    Info (12134): Parameter "port_clk8" = "PORT_UNUSED"
+    Info (12134): Parameter "port_clk9" = "PORT_UNUSED"
+    Info (12134): Parameter "port_clkena0" = "PORT_UNUSED"
+    Info (12134): Parameter "port_clkena1" = "PORT_UNUSED"
+    Info (12134): Parameter "port_clkena2" = "PORT_UNUSED"
+    Info (12134): Parameter "port_clkena3" = "PORT_UNUSED"
+    Info (12134): Parameter "port_clkena4" = "PORT_UNUSED"
+    Info (12134): Parameter "port_clkena5" = "PORT_UNUSED"
+    Info (12134): Parameter "self_reset_on_loss_lock" = "OFF"
+    Info (12134): Parameter "using_fbmimicbidir_port" = "OFF"
+    Info (12134): Parameter "width_clock" = "10"
+Info (12021): Found 1 design units, including 1 entities, in source file db/clkgen_altpll.v
+    Info (12023): Found entity 1: clkgen_altpll File: C:/Users/rieko/Downloads/de4_switch_restored/db/clkgen_altpll.v Line: 30
+Info (12128): Elaborating entity "clkgen_altpll" for hierarchy "transceivers:GEx4|clkgen:pll|altpll:altpll_component|clkgen_altpll:auto_generated" File: c:/intelfpga_lite/20.1/quartus/libraries/megafunctions/altpll.tdf Line: 898
+Info (12128): Elaborating entity "phy_setup" for hierarchy "transceivers:GEx4|phy_setup:setup_phy" File: C:/Users/rieko/Downloads/de4_switch_restored/transceivers.vhd Line: 198
+Warning (10036): Verilog HDL or VHDL warning at phy_setup.vhd(51): object "data_out" assigned a value but never read File: C:/Users/rieko/Downloads/de4_switch_restored/phy_setup.vhd Line: 51
+Warning (10036): Verilog HDL or VHDL warning at phy_setup.vhd(52): object "phy_addr" assigned a value but never read File: C:/Users/rieko/Downloads/de4_switch_restored/phy_setup.vhd Line: 52
+Warning (10631): VHDL Process Statement warning at phy_setup.vhd(91): inferring latch(es) for signal or variable "we", which holds its previous value in one or more paths through the process File: C:/Users/rieko/Downloads/de4_switch_restored/phy_setup.vhd Line: 91
+Info (10041): Inferred latch for "we" at phy_setup.vhd(91) File: C:/Users/rieko/Downloads/de4_switch_restored/phy_setup.vhd Line: 91
+Info (12128): Elaborating entity "mdio" for hierarchy "transceivers:GEx4|phy_setup:setup_phy|mdio:mdio0" File: C:/Users/rieko/Downloads/de4_switch_restored/phy_setup.vhd Line: 80
+Info (12128): Elaborating entity "clk_decoup" for hierarchy "transceivers:GEx4|clk_decoup:\decoup:0:tx" File: C:/Users/rieko/Downloads/de4_switch_restored/transceivers.vhd Line: 204
+Warning (10036): Verilog HDL or VHDL warning at clk_decoup.vhd(51): object "rdempty" assigned a value but never read File: C:/Users/rieko/Downloads/de4_switch_restored/clk_decoup.vhd Line: 51
+Warning (10036): Verilog HDL or VHDL warning at clk_decoup.vhd(53): object "wrfull" assigned a value but never read File: C:/Users/rieko/Downloads/de4_switch_restored/clk_decoup.vhd Line: 53
+Info (12128): Elaborating entity "clksync" for hierarchy "transceivers:GEx4|clk_decoup:\decoup:0:tx|clksync:fifo" File: C:/Users/rieko/Downloads/de4_switch_restored/clk_decoup.vhd Line: 63
+Info (12128): Elaborating entity "dcfifo" for hierarchy "transceivers:GEx4|clk_decoup:\decoup:0:tx|clksync:fifo|dcfifo:dcfifo_component" File: C:/Users/rieko/Downloads/de4_switch_restored/clksync.vhd Line: 109
+Info (12130): Elaborated megafunction instantiation "transceivers:GEx4|clk_decoup:\decoup:0:tx|clksync:fifo|dcfifo:dcfifo_component" File: C:/Users/rieko/Downloads/de4_switch_restored/clksync.vhd Line: 109
+Info (12133): Instantiated megafunction "transceivers:GEx4|clk_decoup:\decoup:0:tx|clksync:fifo|dcfifo:dcfifo_component" with the following parameter: File: C:/Users/rieko/Downloads/de4_switch_restored/clksync.vhd Line: 109
+    Info (12134): Parameter "add_usedw_msb_bit" = "ON"
+    Info (12134): Parameter "intended_device_family" = "Stratix II GX"
+    Info (12134): Parameter "lpm_hint" = "MAXIMIZE_SPEED=7,"
+    Info (12134): Parameter "lpm_numwords" = "32"
+    Info (12134): Parameter "lpm_showahead" = "OFF"
+    Info (12134): Parameter "lpm_type" = "dcfifo"
+    Info (12134): Parameter "lpm_width" = "9"
+    Info (12134): Parameter "lpm_widthu" = "6"
+    Info (12134): Parameter "overflow_checking" = "ON"
+    Info (12134): Parameter "rdsync_delaypipe" = "5"
+    Info (12134): Parameter "underflow_checking" = "ON"
+    Info (12134): Parameter "use_eab" = "ON"
+    Info (12134): Parameter "write_aclr_synch" = "ON"
+    Info (12134): Parameter "wrsync_delaypipe" = "5"
+Info (12021): Found 1 design units, including 1 entities, in source file db/dcfifo_3cp1.tdf
+    Info (12023): Found entity 1: dcfifo_3cp1 File: C:/Users/rieko/Downloads/de4_switch_restored/db/dcfifo_3cp1.tdf Line: 49
+Info (12128): Elaborating entity "dcfifo_3cp1" for hierarchy "transceivers:GEx4|clk_decoup:\decoup:0:tx|clksync:fifo|dcfifo:dcfifo_component|dcfifo_3cp1:auto_generated" File: c:/intelfpga_lite/20.1/quartus/libraries/megafunctions/dcfifo.tdf Line: 191
+Info (12021): Found 1 design units, including 1 entities, in source file db/a_gray2bin_hra.tdf
+    Info (12023): Found entity 1: a_gray2bin_hra File: C:/Users/rieko/Downloads/de4_switch_restored/db/a_gray2bin_hra.tdf Line: 23
+Info (12128): Elaborating entity "a_gray2bin_hra" for hierarchy "transceivers:GEx4|clk_decoup:\decoup:0:tx|clksync:fifo|dcfifo:dcfifo_component|dcfifo_3cp1:auto_generated|a_gray2bin_hra:rdptr_g_gray2bin" File: C:/Users/rieko/Downloads/de4_switch_restored/db/dcfifo_3cp1.tdf Line: 65
+Info (12021): Found 1 design units, including 1 entities, in source file db/a_graycounter_gg6.tdf
+    Info (12023): Found entity 1: a_graycounter_gg6 File: C:/Users/rieko/Downloads/de4_switch_restored/db/a_graycounter_gg6.tdf Line: 25
+Info (12128): Elaborating entity "a_graycounter_gg6" for hierarchy "transceivers:GEx4|clk_decoup:\decoup:0:tx|clksync:fifo|dcfifo:dcfifo_component|dcfifo_3cp1:auto_generated|a_graycounter_gg6:rdptr_g1p" File: C:/Users/rieko/Downloads/de4_switch_restored/db/dcfifo_3cp1.tdf Line: 69
+Info (12021): Found 1 design units, including 1 entities, in source file db/a_graycounter_cub.tdf
+    Info (12023): Found entity 1: a_graycounter_cub File: C:/Users/rieko/Downloads/de4_switch_restored/db/a_graycounter_cub.tdf Line: 25
+Info (12128): Elaborating entity "a_graycounter_cub" for hierarchy "transceivers:GEx4|clk_decoup:\decoup:0:tx|clksync:fifo|dcfifo:dcfifo_component|dcfifo_3cp1:auto_generated|a_graycounter_cub:wrptr_g1p" File: C:/Users/rieko/Downloads/de4_switch_restored/db/dcfifo_3cp1.tdf Line: 70
+Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_a761.tdf
+    Info (12023): Found entity 1: altsyncram_a761 File: C:/Users/rieko/Downloads/de4_switch_restored/db/altsyncram_a761.tdf Line: 28
+Info (12128): Elaborating entity "altsyncram_a761" for hierarchy "transceivers:GEx4|clk_decoup:\decoup:0:tx|clksync:fifo|dcfifo:dcfifo_component|dcfifo_3cp1:auto_generated|altsyncram_a761:fifo_ram" File: C:/Users/rieko/Downloads/de4_switch_restored/db/dcfifo_3cp1.tdf Line: 71
+Info (12021): Found 1 design units, including 1 entities, in source file db/dffpipe_8d9.tdf
+    Info (12023): Found entity 1: dffpipe_8d9 File: C:/Users/rieko/Downloads/de4_switch_restored/db/dffpipe_8d9.tdf Line: 25
+Info (12128): Elaborating entity "dffpipe_8d9" for hierarchy "transceivers:GEx4|clk_decoup:\decoup:0:tx|clksync:fifo|dcfifo:dcfifo_component|dcfifo_3cp1:auto_generated|dffpipe_8d9:rdfull_reg" File: C:/Users/rieko/Downloads/de4_switch_restored/db/dcfifo_3cp1.tdf Line: 90
+Info (12021): Found 1 design units, including 1 entities, in source file db/dffpipe_dd9.tdf
+    Info (12023): Found entity 1: dffpipe_dd9 File: C:/Users/rieko/Downloads/de4_switch_restored/db/dffpipe_dd9.tdf Line: 25
+Info (12128): Elaborating entity "dffpipe_dd9" for hierarchy "transceivers:GEx4|clk_decoup:\decoup:0:tx|clksync:fifo|dcfifo:dcfifo_component|dcfifo_3cp1:auto_generated|dffpipe_dd9:rs_brp" File: C:/Users/rieko/Downloads/de4_switch_restored/db/dcfifo_3cp1.tdf Line: 91
+Info (12021): Found 1 design units, including 1 entities, in source file db/alt_synch_pipe_tnl.tdf
+    Info (12023): Found entity 1: alt_synch_pipe_tnl File: C:/Users/rieko/Downloads/de4_switch_restored/db/alt_synch_pipe_tnl.tdf Line: 27
+Info (12128): Elaborating entity "alt_synch_pipe_tnl" for hierarchy "transceivers:GEx4|clk_decoup:\decoup:0:tx|clksync:fifo|dcfifo:dcfifo_component|dcfifo_3cp1:auto_generated|alt_synch_pipe_tnl:rs_dgwp" File: C:/Users/rieko/Downloads/de4_switch_restored/db/dcfifo_3cp1.tdf Line: 93
+Info (12021): Found 1 design units, including 1 entities, in source file db/dffpipe_ed9.tdf
+    Info (12023): Found entity 1: dffpipe_ed9 File: C:/Users/rieko/Downloads/de4_switch_restored/db/dffpipe_ed9.tdf Line: 25
+Info (12128): Elaborating entity "dffpipe_ed9" for hierarchy "transceivers:GEx4|clk_decoup:\decoup:0:tx|clksync:fifo|dcfifo:dcfifo_component|dcfifo_3cp1:auto_generated|alt_synch_pipe_tnl:rs_dgwp|dffpipe_ed9:dffpipe14" File: C:/Users/rieko/Downloads/de4_switch_restored/db/alt_synch_pipe_tnl.tdf Line: 35
+Info (12021): Found 1 design units, including 1 entities, in source file db/dffpipe_3dc.tdf
+    Info (12023): Found entity 1: dffpipe_3dc File: C:/Users/rieko/Downloads/de4_switch_restored/db/dffpipe_3dc.tdf Line: 25
+Info (12128): Elaborating entity "dffpipe_3dc" for hierarchy "transceivers:GEx4|clk_decoup:\decoup:0:tx|clksync:fifo|dcfifo:dcfifo_component|dcfifo_3cp1:auto_generated|dffpipe_3dc:wraclr" File: C:/Users/rieko/Downloads/de4_switch_restored/db/dcfifo_3cp1.tdf Line: 94
+Info (12021): Found 1 design units, including 1 entities, in source file db/alt_synch_pipe_unl.tdf
+    Info (12023): Found entity 1: alt_synch_pipe_unl File: C:/Users/rieko/Downloads/de4_switch_restored/db/alt_synch_pipe_unl.tdf Line: 27
+Info (12128): Elaborating entity "alt_synch_pipe_unl" for hierarchy "transceivers:GEx4|clk_decoup:\decoup:0:tx|clksync:fifo|dcfifo:dcfifo_component|dcfifo_3cp1:auto_generated|alt_synch_pipe_unl:ws_dgrp" File: C:/Users/rieko/Downloads/de4_switch_restored/db/dcfifo_3cp1.tdf Line: 98
+Info (12021): Found 1 design units, including 1 entities, in source file db/dffpipe_fd9.tdf
+    Info (12023): Found entity 1: dffpipe_fd9 File: C:/Users/rieko/Downloads/de4_switch_restored/db/dffpipe_fd9.tdf Line: 25
+Info (12128): Elaborating entity "dffpipe_fd9" for hierarchy "transceivers:GEx4|clk_decoup:\decoup:0:tx|clksync:fifo|dcfifo:dcfifo_component|dcfifo_3cp1:auto_generated|alt_synch_pipe_unl:ws_dgrp|dffpipe_fd9:dffpipe19" File: C:/Users/rieko/Downloads/de4_switch_restored/db/alt_synch_pipe_unl.tdf Line: 35
+Info (12021): Found 1 design units, including 1 entities, in source file db/cmpr_vg5.tdf
+    Info (12023): Found entity 1: cmpr_vg5 File: C:/Users/rieko/Downloads/de4_switch_restored/db/cmpr_vg5.tdf Line: 23
+Info (12128): Elaborating entity "cmpr_vg5" for hierarchy "transceivers:GEx4|clk_decoup:\decoup:0:tx|clksync:fifo|dcfifo:dcfifo_component|dcfifo_3cp1:auto_generated|cmpr_vg5:rdempty_eq_comp1_lsb" File: C:/Users/rieko/Downloads/de4_switch_restored/db/dcfifo_3cp1.tdf Line: 105
+Info (12021): Found 1 design units, including 1 entities, in source file db/cmpr_2h5.tdf
+    Info (12023): Found entity 1: cmpr_2h5 File: C:/Users/rieko/Downloads/de4_switch_restored/db/cmpr_2h5.tdf Line: 23
+Info (12128): Elaborating entity "cmpr_2h5" for hierarchy "transceivers:GEx4|clk_decoup:\decoup:0:tx|clksync:fifo|dcfifo:dcfifo_component|dcfifo_3cp1:auto_generated|cmpr_2h5:rdfull_eq_comp" File: C:/Users/rieko/Downloads/de4_switch_restored/db/dcfifo_3cp1.tdf Line: 109
+Info (12021): Found 1 design units, including 1 entities, in source file db/mux_9d7.tdf
+    Info (12023): Found entity 1: mux_9d7 File: C:/Users/rieko/Downloads/de4_switch_restored/db/mux_9d7.tdf Line: 23
+Info (12128): Elaborating entity "mux_9d7" for hierarchy "transceivers:GEx4|clk_decoup:\decoup:0:tx|clksync:fifo|dcfifo:dcfifo_component|dcfifo_3cp1:auto_generated|mux_9d7:rdemp_eq_comp_lsb_mux" File: C:/Users/rieko/Downloads/de4_switch_restored/db/dcfifo_3cp1.tdf Line: 114
+Info (12128): Elaborating entity "tse" for hierarchy "transceivers:GEx4|tse:\gx:0:GE" File: C:/Users/rieko/Downloads/de4_switch_restored/transceivers.vhd Line: 213
+Warning (12125): Using design file triple_speed_ethernet-library/altera_tse_pcs_pma.v, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
+    Info (12023): Found entity 1: altera_tse_pcs_pma File: C:/Users/rieko/Downloads/de4_switch_restored/triple_speed_ethernet-library/altera_tse_pcs_pma.v Line: 41
+Warning (10236): Verilog HDL Implicit Net warning at altera_tse_pcs_pma.v(275): created implicit net for "tbi_tx_clk" File: C:/Users/rieko/Downloads/de4_switch_restored/triple_speed_ethernet-library/altera_tse_pcs_pma.v Line: 275
+Warning (10236): Verilog HDL Implicit Net warning at altera_tse_pcs_pma.v(384): created implicit net for "reset_ref_clk_int" File: C:/Users/rieko/Downloads/de4_switch_restored/triple_speed_ethernet-library/altera_tse_pcs_pma.v Line: 384
+Warning (10236): Verilog HDL Implicit Net warning at altera_tse_pcs_pma.v(390): created implicit net for "reset_tbi_rx_clk_int" File: C:/Users/rieko/Downloads/de4_switch_restored/triple_speed_ethernet-library/altera_tse_pcs_pma.v Line: 390
+Warning (10236): Verilog HDL Implicit Net warning at altera_tse_pcs_pma.v(433): created implicit net for "GND" File: C:/Users/rieko/Downloads/de4_switch_restored/triple_speed_ethernet-library/altera_tse_pcs_pma.v Line: 433
+Warning (10236): Verilog HDL Implicit Net warning at altera_tse_pcs_pma.v(442): created implicit net for "rx_reset" File: C:/Users/rieko/Downloads/de4_switch_restored/triple_speed_ethernet-library/altera_tse_pcs_pma.v Line: 442
+Info (12128): Elaborating entity "altera_tse_pcs_pma" for hierarchy "transceivers:GEx4|tse:\gx:0:GE|altera_tse_pcs_pma:altera_tse_pcs_pma_inst" File: C:/Users/rieko/Downloads/de4_switch_restored/tse.vhd Line: 113
+Warning (10036): Verilog HDL or VHDL warning at altera_tse_pcs_pma.v(187): object "gxb_pwrdn_in_sig" assigned a value but never read File: C:/Users/rieko/Downloads/de4_switch_restored/triple_speed_ethernet-library/altera_tse_pcs_pma.v Line: 187
+Error (292019): IP core "Triple Speed Ethernet" (6AF7_00BD) not supported in device family MAX 10. Choose a new device family or upgrade your IP core to a newer version. The Intel FPGA Knowledge Database contains many articles with specific details on how to resolve this error. Visit the Knowledge Database at https://www.intel.com/content/www/us/en/programmable/support/support-resources/knowledge-base/kdb-filter.html and search for this specific error message number.
+Error (292019): IP core "Triple Speed Ethernet" (6AF7_00BD) not supported in device family MAX 10. Choose a new device family or upgrade your IP core to a newer version. The Intel FPGA Knowledge Database contains many articles with specific details on how to resolve this error. Visit the Knowledge Database at https://www.intel.com/content/www/us/en/programmable/support/support-resources/knowledge-base/kdb-filter.html and search for this specific error message number.
+Error (10003): Can't open encrypted VHDL or Verilog HDL file "C:/Users/rieko/Downloads/de4_switch_restored/triple_speed_ethernet-library/altera_tse_top_1000_base_x.v" -- current license file does not contain a valid license for encrypted file
+Error: Quartus Prime Analysis & Synthesis was unsuccessful. 3 errors, 30 warnings
+    Error: Peak virtual memory: 4868 megabytes
+    Error: Processing ended: Wed Mar 13 14:05:53 2024
+    Error: Elapsed time: 00:00:20
+    Error: Total CPU time (on all processors): 00:00:25
+
+
