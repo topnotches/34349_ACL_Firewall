@@ -1,0 +1,9 @@
+import crc8
+hash = crc8.crc8()
+hash.update(b'\x00\x11\x23\x32\x1C\xAC\x23\x3F\x25\x47\x3D\xB7\xE2\xC5\x6D\xB5\xDF\xFB\x48\xD2\xB0\x60\xD0\xF5\xA7\x10\x96\xE0\x00\x00\x00\x00\x00\x00\x00\x00\xC5')
+print(hash.hexdigest())
+print(hash.hexdigest())
+#assert hash.hexdigest() == 'c0'
+#assert hash.digest() == b'\xc0'
+hash.reset()
+assert hash.hexdigest() == '00'

@@ -12,7 +12,11 @@ class acl_hash():
         self.crc_length = crc_length
         self.parallelization = parallelization
         self.design_matrix = self.gen_design_matrix()
-        
+        self.lof_poly = [7,15]
+        self.lof_poly_tables = []
+        for i in range(len(self.lof_poly)):
+            self.lof_poly_tables.append(self.crcTableGen(self.lof_poly[i]))
+            
     def set_lof_g_funcs(self,lof_g_funcs):
         self.lof_g_funcs = lof_g_funcs
     def set_crc_length(self,crc_length):
@@ -25,7 +29,7 @@ class acl_hash():
     def gen_design_matrix(self, g = "11101101101110001000001100100000", parallization = 8):
         g_size = len(g)
         g_matrix = np.fromiter(g, dtype=np.uint).reshape(1,g_size)
-        print(g_matrix)
+        #print(g_matrix)
         big_i_matrix = np.identity(g_size-1)
         
         small_i_matrix = np.identity(parallization-1)
@@ -82,9 +86,32 @@ class acl_hash():
         for string in my_vhdl_expressions:
             print(string[:-6] + ";")
 
-my_hash = acl_hash()
+    def calculateByteInCRCTable(self, byteValue, poly):
+        for i in range(8):
+            byteValue = byteValue << 1
+            if (byteValue//256) == 1:
+                byteValue = byteValue - 256
+                byteValue = byteValue ^ poly
+        return byteValue
+    
+    def crcTableGen(self, poly):
+        crcTable = []
+        for i in range(256):
+            crcTable += [self.calculateByteInCRCTable(i, poly)]
+        return crcTable        
 
-my_hash.print_rtl()
+    def hash(self, index, seq):
+        crc = 0
+        for byte in seq:
+            crcByte = byte^crc
+            crc = self.lof_poly_tables[index][crcByte]
+        print(crc)
+
+my_hash = acl_hash()
+sequence = [5563786548586, 26, 106, 10, 8, 3, 3, 3, 114]
+my_hash.hash(0,sequence)
+
+#my_hash.print_rtl()
 
         
         
