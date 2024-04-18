@@ -37,6 +37,7 @@ architecture rtl of acl_fsm_rtl is
   signal sif_hash                                : acl_hash_if;
   signal slv8_hash_address                       : std_logic_vector(ACL_HASH_LENGTH - 1 downto 0);
 begin
+
   HASH_FUNCTION : work.hash_rtl(rtl)
   port map
   (
