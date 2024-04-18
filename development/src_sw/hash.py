@@ -7,7 +7,7 @@ np.set_printoptions(threshold=sys.maxsize, edgeitems=30, linewidth=100000,
 
 
 class acl_hash():
-    def __init__(self, lof_g_funcs =["11101101101110001000001100100000"], crc_length = 32, parallelization = 8):
+    def __init__(self, lof_g_funcs =["00001111"], crc_length = 8, parallelization = 8):
         self.lof_g_funcs = lof_g_funcs
         self.crc_length = crc_length
         self.parallelization = parallelization
@@ -26,7 +26,7 @@ class acl_hash():
         return lof_g_funcs
     def get_crc_length(self,crc_length):
         return crc_length
-    def gen_design_matrix(self, g = "11101101101110001000001100100000", parallization = 8):
+    def gen_design_matrix(self, g = "00000111", parallization = 8):
         g_size = len(g)
         g_matrix = np.fromiter(g, dtype=np.uint).reshape(1,g_size)
         #print(g_matrix)
@@ -35,10 +35,10 @@ class acl_hash():
         small_i_matrix = np.identity(parallization-1)
         
         big_i_matrix=np.c_[np.zeros(g_size-1), big_i_matrix, np.zeros((g_size-1,parallization))]
-        big_i_matrix=np.r_[ big_i_matrix, np.c_[g_matrix,np.zeros((1,parallization))]]
+        big_i_matrix=np.r_[ big_i_matrix, np.c_[np.flip(g_matrix),np.zeros((1,parallization))]]
         big_i_matrix=np.r_[ big_i_matrix, np.c_[np.ones((1,1)),np.zeros((1,g_size+parallization-2)),np.ones((1,1))]]
         big_i_matrix=np.r_[ big_i_matrix, np.c_[np.zeros((parallization-1,g_size)),np.eye((parallization-1)),np.zeros((parallization-1,1))]]
-
+        print(big_i_matrix)
         
         return big_i_matrix
     
