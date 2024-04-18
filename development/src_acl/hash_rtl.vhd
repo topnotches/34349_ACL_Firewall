@@ -6,12 +6,11 @@ use work.acl_defs_pkg.all;
 entity hash_rtl is
   port
   (
-    pl_rst           : in std_logic; -- system clock
-    pl_clk           : in std_logic; -- system clock
-    pif_header       : in acl_header_if;
-    plv4_select_hash : in std_logic_vector(3 downto 0);
-    pl_hash_rdy      : out std_logic; -- hash address.
-    plv8_hash        : out std_logic_vector(ACL_HASH_LENGTH - 1 downto 0) -- hash address.
+    pl_rst      : in std_logic; -- system clock
+    pl_clk      : in std_logic; -- system clock
+    piif_header : in acl_header_if;
+    pl_hash_rdy : out std_logic; -- hash address.
+    plv8_hash   : out std_logic_vector(ACL_HASH_LENGTH - 1 downto 0) -- hash address.
   );
 end entity hash_rtl;
 
@@ -32,21 +31,21 @@ begin
   --                            --
   --------------------------------
   -- FILL OUT LATER
-  hash_select_function : process (pif_header, slv8_hash_value, plv4_select_hash) is
+  hash_select_function : process (piif_header, slv8_hash_value) is
   begin
 
-    case plv4_select_hash is
+    case piif_header.lv4_select is
 
       when "0000" =>
 
-        slv8_hash_value_next(0) <= slv8_hash_value(0) xor slv8_hash_value(6) xor slv8_hash_value(7) xor pif_header.data(0);
-        slv8_hash_value_next(1) <= slv8_hash_value(0) xor slv8_hash_value(1) xor slv8_hash_value(6) xor pif_header.data(1);
-        slv8_hash_value_next(2) <= slv8_hash_value(0) xor slv8_hash_value(1) xor slv8_hash_value(2) xor slv8_hash_value(6) xor pif_header.data(2);
-        slv8_hash_value_next(3) <= slv8_hash_value(1) xor slv8_hash_value(2) xor slv8_hash_value(3) xor slv8_hash_value(7) xor pif_header.data(3);
-        slv8_hash_value_next(4) <= slv8_hash_value(2) xor slv8_hash_value(3) xor slv8_hash_value(4) xor pif_header.data(4);
-        slv8_hash_value_next(5) <= slv8_hash_value(3) xor slv8_hash_value(4) xor slv8_hash_value(5) xor pif_header.data(5);
-        slv8_hash_value_next(6) <= slv8_hash_value(4) xor slv8_hash_value(5) xor slv8_hash_value(6) xor pif_header.data(6);
-        slv8_hash_value_next(7) <= slv8_hash_value(5) xor slv8_hash_value(6) xor slv8_hash_value(7) xor pif_header.data(7);
+        slv8_hash_value_next(0) <= slv8_hash_value(0) xor slv8_hash_value(6) xor slv8_hash_value(7) xor piif_header.lv8_data(0);
+        slv8_hash_value_next(1) <= slv8_hash_value(0) xor slv8_hash_value(1) xor slv8_hash_value(6) xor piif_header.lv8_data(1);
+        slv8_hash_value_next(2) <= slv8_hash_value(0) xor slv8_hash_value(1) xor slv8_hash_value(2) xor slv8_hash_value(6) xor piif_header.lv8_data(2);
+        slv8_hash_value_next(3) <= slv8_hash_value(1) xor slv8_hash_value(2) xor slv8_hash_value(3) xor slv8_hash_value(7) xor piif_header.lv8_data(3);
+        slv8_hash_value_next(4) <= slv8_hash_value(2) xor slv8_hash_value(3) xor slv8_hash_value(4) xor piif_header.lv8_data(4);
+        slv8_hash_value_next(5) <= slv8_hash_value(3) xor slv8_hash_value(4) xor slv8_hash_value(5) xor piif_header.lv8_data(5);
+        slv8_hash_value_next(6) <= slv8_hash_value(4) xor slv8_hash_value(5) xor slv8_hash_value(6) xor piif_header.lv8_data(6);
+        slv8_hash_value_next(7) <= slv8_hash_value(5) xor slv8_hash_value(6) xor slv8_hash_value(7) xor piif_header.lv8_data(7);
         --  when "0001" =>
         --  when "0010" =>
         --  when "0011" =>
@@ -74,7 +73,7 @@ begin
   --                                      --
   ------------------------------------------
 
-  hash_next_state : process (pif_header, slv8_hash_value_next, hash_state) is
+  hash_next_state : process (piif_header, slv8_hash_value_next, hash_state) is
   begin
 
     hash_state_next <= hash_state;
@@ -84,13 +83,13 @@ begin
 
       when ACL_STATE_IDLE =>
 
-        if (pif_header.first = '1') then
+        if (piif_header.l_first = '1') then
           hash_state_next <= ACL_STATE_GEN_HASH;
         end if;
 
       when ACL_STATE_GEN_HASH =>
 
-        if (pif_header.last = '1') then
+        if (piif_header.l_last = '1') then
           hash_state_next <= ACL_STATE_HASH_FINAL;
         end if;
 
