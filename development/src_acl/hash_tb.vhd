@@ -3,7 +3,7 @@ use ieee.std_logic_1164.all;
 use ieee.math_real.all;
 use ieee.numeric_std.all;
 use work.acl_defs_pkg.all;
-use work.acl_header_if.all;
+use work.acl_hash_if.all;
 
 entity hash_tb is
 end entity hash_tb;
@@ -12,7 +12,7 @@ architecture rtl of hash_tb is
 
   signal sl_rst                : std_logic                                      := '0';
   signal sl_clk                : std_logic                                      := '0'; -- system clock
-  signal sif_header            : acl_header_if                                  := ACL_HEADER_IF_ZERO;
+  signal sif_hash              : acl_hash_if                                    := ACL_HASH_IF_ZERO;
   signal sl_hash_rdy           : std_logic                                      := '0'; -- hash address.
   signal slv8_hash             : std_logic_vector(ACL_HASH_LENGTH - 1 downto 0) := (others => '0');
   signal si_hash_input_counter : integer range 0 to 12                          := 0;
@@ -23,11 +23,11 @@ begin
   DUT_hash_gen : entity work.hash_rtl(rtl)
     port map
     (
-      pl_rst      => sl_rst,
-      pl_clk      => sl_clk,
-      piif_header => sif_header,
-      pl_hash_rdy => sl_hash_rdy,
-      plv8_hash   => slv8_hash
+      pil_rst      => sl_rst,
+      pil_clk      => sl_clk,
+      piif_hash    => sif_hash,
+      pol_hash_rdy => sl_hash_rdy,
+      polv8_hash   => slv8_hash
     );
 
   -- Testbench for diagonal input
@@ -45,18 +45,18 @@ begin
         sl_clk <= '0';
         case i is
           when 0 =>
-            sif_header.l_first  <= '1';
-            sif_header.lv8_data <= std_logic_vector(to_unsigned(sarr_input_stim(i), sif_header.lv8_data'length));
+            sif_hash.l_first  <= '1';
+            sif_hash.lv8_data <= std_logic_vector(to_unsigned(sarr_input_stim(i), sif_hash.lv8_data'length));
           when 10 =>
 
-            sif_header.l_last   <= '1';
-            sif_header.lv8_data <= std_logic_vector(to_unsigned(sarr_input_stim(i), sif_header.lv8_data'length));
+            sif_hash.l_last   <= '1';
+            sif_hash.lv8_data <= std_logic_vector(to_unsigned(sarr_input_stim(i), sif_hash.lv8_data'length));
           when 11 =>
 
-            sif_header <= ACL_HEADER_IF_ZERO;
+            sif_hash <= ACL_HASH_IF_ZERO;
             report "Test: DONE";
           when others =>
-            sif_header.lv8_data <= std_logic_vector(to_unsigned(sarr_input_stim(i), sif_header.lv8_data'length));
+            sif_hash.lv8_data <= std_logic_vector(to_unsigned(sarr_input_stim(i), sif_hash.lv8_data'length));
         end case;
         wait for 5 ns;
         sl_clk <= '1';
