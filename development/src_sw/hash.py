@@ -1,4 +1,5 @@
 import numpy as np
+import csv
 import sys
 
 # Set print options for numpy arrays
@@ -105,11 +106,65 @@ class acl_hash():
         for byte in seq:
             crcByte = byte^crc
             crc = self.lof_poly_tables[index][crcByte]
-        print(crc)
+        return crc
+
+    def hashTableGen(self, index, roles):
+        sortedRoles = [[0]*256, [0]*256]
+        for i in range(len(roles[0])):
+            print(self.hash(index, roles[0][i]))
+            idx = self.hash(index, roles[0][i])
+            sortedRoles[0][idx] = roles[0][i]
+            sortedRoles[1][idx] = roles[1][i]
+        roles = sortedRoles
+        return roles
+
+    def read_CSV(self, fileName):
+        roles = []
+        headers = []
+        actions = []
+        rolesFile = open(fileName, "r")
+        rolesFile.readline()
+        for role in rolesFile:
+            header = []
+            roleAndAcion = role.split('-')
+            roleAndAcion[0] = roleAndAcion[0].replace(',', '').replace(' ', '')
+            actions.append(int(roleAndAcion[1].strip()))
+            while roleAndAcion[0] != '':
+                test = ''
+                if len(roleAndAcion[0]) > 2:
+                    for i in range(3):
+                        test += roleAndAcion[0][i]
+                    if int(test) < 256:
+                        header.append(int(test))
+                        roleAndAcion[0] = roleAndAcion[0][3:]
+                    else:
+                        header.append(int(test[:2]))
+                        roleAndAcion[0] = roleAndAcion[0][2: ]
+                else:
+                    header.append(int(roleAndAcion[0]))
+                    roleAndAcion[0] = ''
+            headers.append(header)
+        rolesFile.close()
+        roles.extend([headers,actions])
+        return roles
+    
+    def write_CSV(self, roles):
+        outfile = open("hashtable.csv", "w")
+        for role in roles:
+            outfile.write(str(role)+'\n')
+        #insrwd of 2 long rows, 2 long columns.
+        #for i in range(256):
+            #outfile.write(str(roles[0][i]) + ' - ' + str(roles[1][i]) + '\n')
+        outfile.close()
+
+        
+
 
 my_hash = acl_hash()
-sequence = [5563786548586, 26, 106, 10, 8, 3, 3, 3, 114]
-my_hash.hash(0,sequence)
+#sequence = [[192,168,5,251,88,25,25,192,168,15,25],[192,168,5,21,88,25,25,192,168,15,245],[192,168,5,251,88,25,255,192,168,15,245]]
+roles = my_hash.read_CSV("roles.csv") #very important that the actions and the addresses are seperted by a '-'
+sortedRoles = my_hash.hashTableGen(0,roles)
+my_hash.write_CSV(sortedRoles)
 
 #my_hash.print_rtl()
 
