@@ -15,8 +15,9 @@ package acl_defs_pkg is
 
   -- TUPLE COUNTER INITS
 
-  constant TUPLE_COUNTER_ZERO : natural := 0;
-  constant TUPLE_COUNTER_INIT : natural := 13;
+  constant ACL_TUPLE_COUNTER_ZERO : natural := 0;
+  constant ACL_TUPLE_COUNTER_INIT : natural := 13;
+
 end package acl_defs_pkg;
 
 package body acl_defs_pkg is

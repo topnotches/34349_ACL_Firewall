@@ -30,7 +30,7 @@ begin
   --  HASH FUNCTION SWITCH      --
   --                            --
   --------------------------------
-  -- FILL OUT LATER
+
   hash_select_function : process (piif_hash, slv8_hash_value) is
   begin
 
