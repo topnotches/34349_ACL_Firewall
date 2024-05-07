@@ -27,7 +27,7 @@ architecture rtl of acl_fsm_rtl is
 
   signal   slv104_tuple,       slv104_tuple_next       : std_logic_vector(ACL_TUPLE_LENGTH - 1 downto 0)       := (others => '0');
   signal   slv104_tuple_table, slv104_tuple_table_next : std_logic_vector(ACL_TUPLE_LENGTH - 1 downto 0)       := (others => '0');
-  signal   slv104_rule_xor                             : std_logic_vector(ACL_TUPLE_LENGTH - 1 downto 0)       := (others => '0');
+  signal   slv104_rule_xor,    slv104_rule_xor_next    : std_logic_vector(ACL_TUPLE_LENGTH - 1 downto 0)       := (others => '0');
   signal   sl_rule_hit                                 : std_logic                                             := '0';
   signal   si_tuple_counter,   si_tuple_counter_next   : natural range 0 to ACL_BYTES_PER_TUPLE - 1            := ACL_TUPLE_COUNTER_INIT - 1;
   constant clv4_check_zero                             : std_logic_vector(ACL_TUPLE_COUNTER_BITS - 1 downto 0) := (others => '0');
@@ -36,7 +36,6 @@ architecture rtl of acl_fsm_rtl is
   signal   sif_hash                                    : acl_hash_if;
   signal   slv8_hash_address,  slv8_hash_address_next  : std_logic_vector(ACL_HASH_LENGTH - 1 downto 0)        := (others => '0');
   signal   slv8_hash                                   : std_logic_vector(7 downto 0)                          := (others => '0');
-  signal   slv8_data                                   : std_logic_vector(7 downto 0)                          := (others => '0');
   signal   sl_hash_rdy                                 : std_logic                                             := '0';
   signal   sl_hash_valid,      sl_hash_valid_next      : std_logic                                             := '0';
 
@@ -62,8 +61,7 @@ begin
   hash_function : entity work.hash_rtl(rtl)
     port map (
       pil_rst      => pil_rst,
-      pil_en       => pil_valid,
-      pil_clk      => pil_clk,
+      pil_clk      => sl_gated_hash_clk,
       piif_hash    => sif_hash,
       pol_hash_rdy => sl_hash_rdy,
       polv8_hash   => slv8_hash
@@ -73,47 +71,21 @@ begin
     slv104_rule_xor(i) <= slv104_tuple(i) xor slv104_tuple_table(i);
   end generate tuple_xor_gen;
 
-  -- not supported in quartus!
-  -- sl_rule_hit <= or(slv104_rule_xor);
-
-  process (slv104_rule_xor) is
-  begin
-
-    if (to_integer(unsigned(slv104_rule_xor)) = 0) then
-      sl_rule_hit <= '0';
-    else
-      sl_rule_hit <= '1';
-    end if;
-
-  end process;
+  sl_rule_hit <= or slv104_rule_xor;
 
   --------------------------------------------
   --                                        --
   --  GEN GATED CLOCK FOR HASH FUNCTION     --
   --                                        --
   --------------------------------------------
-  -- sl_gated_hash_clk <= pil_valid and pil_clk;
-  -- Gated clocks are notty notty for fpga
+  sl_gated_hash_clk <= pil_valid and pil_clk;
 
   ----------------------------------------
   --                                    --
   --  ZERO CHECK LOGIC                  --
   --                                    --
   ----------------------------------------
-  -- not supported in quartus!
-  -- sl_counter_is_zero <= or(std_logic_vector(to_unsigned(si_tuple_counter, 4)));
-
-  process (si_tuple_counter) is
-  begin
-
-    if (si_tuple_counter = 0) then
-      sl_counter_is_zero <= '0';
-    else
-      sl_counter_is_zero <= '1';
-    end if;
-
-  end process;
-
+  sl_counter_is_zero <= or std_logic_vector(to_unsigned(si_tuple_counter, 4));
   ----------------------------------------
   --                                    --
   --  ACL CONTROL FSM NEXT STATE LOGIC  --
@@ -129,7 +101,6 @@ begin
            sl_counter_is_zero,
            pilv128_table_data,
            sl_rule_hit,
-           slv8_data,
            sl_hash_rdy) is
   begin
 
@@ -138,12 +109,11 @@ begin
     sstate_acl_fsm_next     <= sstate_acl_fsm;
     slv8_hash_address_next  <= slv8_hash_address;
     slv104_tuple_table_next <= (others => '0');
-
-    sl_hash_valid_next    <= '0';
-    sif_hash              <= ACL_HASH_IF_ZERO;
-    si_tuple_counter_next <= si_tuple_counter;
-    pol_table_read_en     <= '0';
-    pol_block             <= '0';
+    sl_hash_valid_next      <= '0';
+    sif_hash                <= ACL_HASH_IF_ZERO;
+    si_tuple_counter_next   <= si_tuple_counter;
+    pol_table_read_en       <= '0';
+    pol_block               <= '0';
 
     case sstate_acl_fsm is
 
@@ -153,10 +123,9 @@ begin
           sstate_acl_fsm_next <= state_acl_fsm_load_header;
 
           slv104_tuple_next(si_tuple_counter * ACL_DATA_BUS_LENGTH + ACL_DATA_BUS_LENGTH - 1 downto si_tuple_counter * ACL_DATA_BUS_LENGTH) <= pilv8_data;
+          si_tuple_counter_next                                                                                                             <= si_tuple_counter - 1;
 
-          si_tuple_counter_next <= si_tuple_counter - 1;
-
-          sif_hash.lv8_data <= slv8_data;
+          sif_hash.lv8_data <= pilv8_data;
           sif_hash.l_first  <= '1';
         end if;
 
@@ -164,10 +133,9 @@ begin
 
         if (pil_valid = '1') then
           slv104_tuple_next(si_tuple_counter * ACL_DATA_BUS_LENGTH + ACL_DATA_BUS_LENGTH - 1 downto si_tuple_counter * ACL_DATA_BUS_LENGTH) <= pilv8_data;
+          sif_hash.lv8_data                                                                                                                 <= pilv8_data;
 
-          sif_hash.lv8_data <= slv8_data;
-
-          if (sl_counter_is_zero = '1') then
+          if (sl_counter_is_zero = '0') then
             si_tuple_counter_next <= si_tuple_counter - 1;
           else
             sif_hash.l_last     <= '1';
@@ -231,15 +199,15 @@ begin
         slv104_tuple       <= (others => '0');
         si_tuple_counter   <= ACL_TUPLE_COUNTER_INIT - 1;
         slv8_hash_address  <= (others => '0');
+        slv104_rule_xor    <= (others => '0');
         slv104_tuple_table <= (others => '0');
-        slv8_data          <= (others => '0');
       else
         sstate_acl_fsm     <= sstate_acl_fsm_next;
         slv104_tuple       <= slv104_tuple_next;
         si_tuple_counter   <= si_tuple_counter_next;
         slv8_hash_address  <= slv8_hash_address_next;
+        slv104_rule_xor    <= slv104_rule_xor_next;
         slv104_tuple_table <= slv104_tuple_table_next;
-        slv8_data          <= pilv8_data;
       end if;
     end if;
 
