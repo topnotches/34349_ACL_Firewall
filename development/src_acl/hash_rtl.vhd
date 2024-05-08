@@ -18,9 +18,9 @@ architecture rtl of hash_rtl is
 
   -- FSM signals
 
-  type hash_state_t is (acl_state_idle, acl_state_gen_hash, acl_state_hash_final, acl_state_hash_done);
+  type hash_state_t is (hash_state_idle, hash_state_gen_hash, hash_state_hash_final, hash_state_hash_done);
 
-  signal hash_state,      hash_state_next      : hash_state_t                                   := acl_state_idle;
+  signal hash_state,      hash_state_next      : hash_state_t                                   := hash_state_idle;
   signal slv8_hash_value, slv8_hash_value_next : std_logic_vector(ACL_HASH_LENGTH - 1 downto 0) := (others => '0');
 
 begin
@@ -85,31 +85,31 @@ begin
 
     case hash_state is
 
-      when acl_state_idle =>
+      when hash_state_idle =>
 
         if (piif_hash.l_first = '1') then
-          hash_state_next <= acl_state_gen_hash;
+          hash_state_next <= hash_state_gen_hash;
         end if;
 
-      when acl_state_gen_hash =>
+      when hash_state_gen_hash =>
 
         if (piif_hash.l_last = '1') then
-          hash_state_next <= acl_state_hash_final;
+          hash_state_next <= hash_state_hash_final;
         end if;
 
-      when acl_state_hash_final =>
+      when hash_state_hash_final =>
 
-        hash_state_next <= acl_state_hash_done;
+        hash_state_next <= hash_state_hash_done;
 
-      when acl_state_hash_done =>
+      when hash_state_hash_done =>
 
-        hash_state_next <= acl_state_idle;
+        hash_state_next <= hash_state_idle;
         polv8_hash      <= slv8_hash_value;
         pol_hash_rdy    <= '1';
 
       when others =>
 
-        hash_state_next <= acl_state_idle;
+        hash_state_next <= hash_state_idle;
 
     end case;
 
