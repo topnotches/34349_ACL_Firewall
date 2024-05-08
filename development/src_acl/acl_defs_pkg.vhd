@@ -24,7 +24,7 @@ package acl_defs_pkg is
   constant ACL_TUPLE_COUNTER_ZERO  : natural := 0;
   constant ACL_TUPLE_COUNTER_INIT  : natural := 13;
   constant ACL_HEADER_BYTE_COUNTER : natural := ACL_MAX_HEADER_WORDS * ACL_BYTES_PER_WORD;
-  constant ACL_IPV4_HEADER_BYTES   : natural := 20;
+  constant ACL_IPV4_HEADER_BYTES   : natural := ACL_MIN_HEADER_WORDS * ACL_BYTES_PER_WORD;
   constant ACL_TCP_HEADER_BYTES    : natural := 4;
 end package acl_defs_pkg;
 

@@ -11,6 +11,7 @@ entity hash_table_rtl is
     pil_rst : in std_logic;
 
     pilv8_hash_table_rd_addr : in std_logic_vector(ACL_HASH_LENGTH - 1 downto 0);
+    pil_hash_rd_en           : in std_logic;
 
     pilv8_hash_table_we_addr : in std_logic_vector(ACL_HASH_LENGTH - 1 downto 0);
     pil_hash_wr_en           : in std_logic;
@@ -57,10 +58,18 @@ begin
         sarr256lv128_hash_table_memory_0(to_integer(unsigned(pilv8_hash_table_wr_addr))) <= slv32_hash_table_wr_data_0;
 
       end if;
-      slv32_hash_table_rd_data_3 <= sarr256lv128_hash_table_memory_3(to_integer(unsigned(pilv8_hash_table_rd_addr)));
-      slv32_hash_table_rd_data_2 <= sarr256lv128_hash_table_memory_2(to_integer(unsigned(pilv8_hash_table_rd_addr)));
-      slv32_hash_table_rd_data_1 <= sarr256lv128_hash_table_memory_1(to_integer(unsigned(pilv8_hash_table_rd_addr)));
-      slv32_hash_table_rd_data_0 <= sarr256lv128_hash_table_memory_0(to_integer(unsigned(pilv8_hash_table_rd_addr)));
+      if (pil_hash_rd_en = '1') then
+        slv32_hash_table_rd_data_3 <= sarr256lv128_hash_table_memory_3(to_integer(unsigned(pilv8_hash_table_rd_addr)));
+        slv32_hash_table_rd_data_2 <= sarr256lv128_hash_table_memory_2(to_integer(unsigned(pilv8_hash_table_rd_addr)));
+        slv32_hash_table_rd_data_1 <= sarr256lv128_hash_table_memory_1(to_integer(unsigned(pilv8_hash_table_rd_addr)));
+        slv32_hash_table_rd_data_0 <= sarr256lv128_hash_table_memory_0(to_integer(unsigned(pilv8_hash_table_rd_addr)));
+      else
+
+        slv32_hash_table_rd_data_3 <= sarr256lv128_hash_table_memory_3(to_integer(unsigned(x"0000")));
+        slv32_hash_table_rd_data_2 <= sarr256lv128_hash_table_memory_2(to_integer(unsigned(x"0000")));
+        slv32_hash_table_rd_data_1 <= sarr256lv128_hash_table_memory_1(to_integer(unsigned(x"0000")));
+        slv32_hash_table_rd_data_0 <= sarr256lv128_hash_table_memory_0(to_integer(unsigned(x"0000")));
+      end if;
     end if;
   end process;
 end architecture;
