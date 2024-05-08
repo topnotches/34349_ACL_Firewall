@@ -22,10 +22,10 @@ end entity hash_table_rtl;
 
 architecture rtl of hash_table_rtl is
   type hash_table_memory_t is array integer (0 to ((2 ** ACL_HASH_LENGTH) - 1)) of std_logic_vector(ACL_HASH_TABLE_M9K_LENGTH - 1 downto 0);
-  signal sarr256lv32_hash_table_memory_0 : hash_table_memory_t                         := (others => (others => '0')); -- LSW
-  signal sarr256lv32_hash_table_memory_1 : hash_table_memory_t                         := (others => (others => '0')); -- ALSW
-  signal sarr256lv32_hash_table_memory_2 : hash_table_memory_t                         := (others => (others => '0')); -- AMSW
   signal sarr256lv32_hash_table_memory_3 : hash_table_memory_t                         := (others => (others => '0')); -- MSW
+  signal sarr256lv32_hash_table_memory_2 : hash_table_memory_t                         := (others => (others => '0')); -- AMSW
+  signal sarr256lv32_hash_table_memory_1 : hash_table_memory_t                         := (others => (others => '0')); -- ALSW
+  signal sarr256lv32_hash_table_memory_0 : hash_table_memory_t                         := (others => (others => '0')); -- LSW
   signal slv32_hash_table_rd_data_3      : std_logic_vector(ACL_HASH_TABLE_M9K_LENGTH) := (others => '0');
   signal slv32_hash_table_rd_data_2      : std_logic_vector(ACL_HASH_TABLE_M9K_LENGTH) := (others => '0');
   signal slv32_hash_table_rd_data_1      : std_logic_vector(ACL_HASH_TABLE_M9K_LENGTH) := (others => '0');
