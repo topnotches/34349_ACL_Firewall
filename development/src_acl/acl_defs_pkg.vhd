@@ -15,6 +15,8 @@ package acl_defs_pkg is
   constant ACL_HASH_LENGTH                : natural := 8;
   constant ACL_HASH_TABLE_LENGTH          : natural := ACL_HASH_LENGTH;
   constant ACL_HASH_FUNCTION_SELECT_COUNT : natural := 4;
+  constant ACL_HASH_TABLE_M9K_LENGTH      : natural := 32;
+  constant ACL_HASH_TABLE_ADDRESS_LENGTH  : natural := 128;
 
   -- TUPLE COUNTER INITS
   constant ACL_MIN_HEADER_WORDS    : natural := 5;
