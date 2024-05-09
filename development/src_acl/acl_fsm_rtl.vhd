@@ -11,9 +11,8 @@ entity acl_fsm_rtl is
         pil_clk : in std_logic;
         pil_rst : in std_logic;
         -- Header extractor input
-        pilv8_data         : in std_logic_vector(ACL_DATA_BUS_LENGTH - 1 downto 0);
-        pil_valid          : in std_logic;
-        pil_start_of_tuple : in std_logic;
+        pilv8_data : in std_logic_vector(ACL_DATA_BUS_LENGTH - 1 downto 0);
+        pil_valid  : in std_logic;
         -- Table ports
         polv8_table_addr   : out std_logic_vector(ACL_HASH_LENGTH - 1 downto 0);
         pol_table_read_en  : out std_logic;
@@ -83,7 +82,7 @@ begin
 
         if (to_integer(unsigned(slv104_rule_xor)) = 0) then
             sl_rule_hit <= '0';
-        else
+            else
             sl_rule_hit <= '1';
         end if;
 
@@ -110,7 +109,7 @@ begin
 
         if (si_tuple_counter = 0) then
             sl_counter_is_zero <= '0';
-        else
+            else
             sl_counter_is_zero <= '1';
         end if;
 
@@ -235,7 +234,7 @@ begin
                 slv8_hash_address  <= (others => '0');
                 slv104_tuple_table <= (others => '0');
                 slv8_data          <= (others => '0');
-            else
+                else
                 sstate_acl_fsm     <= sstate_acl_fsm_next;
                 slv104_tuple       <= slv104_tuple_next;
                 si_tuple_counter   <= si_tuple_counter_next;

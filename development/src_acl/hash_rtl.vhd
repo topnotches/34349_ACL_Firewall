@@ -21,7 +21,11 @@ architecture rtl of hash_rtl is
 
     type hash_state_t is (hash_state_idle, hash_state_gen_hash, hash_state_hash_final, hash_state_hash_done);
 
-    signal hash_state, hash_state_next           : hash_state_t                                   := hash_state_idle;
+    signal hash_state, hash_state_next : hash_state_t := hash_state_idle;
+
+    attribute dont_touch                         : string;
+    attribute dont_touch of hash_state           : signal is "true";
+    attribute dont_touch of hash_state_next      : signal is "true";
     signal slv8_hash_value, slv8_hash_value_next : std_logic_vector(ACL_HASH_LENGTH - 1 downto 0) := (others => '0');
 
 begin
@@ -126,9 +130,9 @@ begin
 
         if rising_edge(pil_clk) then
             if (pil_rst = '1') then
-                hash_state      <= acl_state_idle;
+                hash_state      <= hash_state_idle;
                 slv8_hash_value <= (others => '0');
-            elsif (pil_en) then
+                elsif (pil_en) then
                 hash_state      <= hash_state_next;
                 slv8_hash_value <= slv8_hash_value_next;
             end if;

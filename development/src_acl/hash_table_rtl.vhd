@@ -8,16 +8,15 @@ entity hash_table_rtl is
     port
     (
         pil_clk : in std_logic;
-        pil_rst : in std_logic;
 
         pilv8_hash_table_rd_addr : in std_logic_vector(ACL_HASH_LENGTH - 1 downto 0);
         pil_hash_rd_en           : in std_logic;
 
-        pilv8_hash_table_wr_addr : in std_logic_vector(ACL_HASH_LENGTH - 1 downto 0);
-        pil_hash_wr_en           : in std_logic;
-
-        pilv128_hash_wr_value : in std_logic_vector(ACL_HASH_TABLE_ADDRESS_LENGTH - 1 downto 0);
         polv128_hash_rd_value : out std_logic_vector(ACL_HASH_TABLE_ADDRESS_LENGTH - 1 downto 0)
+        --pilv8_hash_table_wr_addr : in std_logic_vector(ACL_HASH_LENGTH - 1 downto 0);
+        --pil_hash_wr_en           : in std_logic;
+
+        --pilv128_hash_wr_value : in std_logic_vector(ACL_HASH_TABLE_ADDRESS_LENGTH - 1 downto 0);
     );
 end entity hash_table_rtl;
 
@@ -32,38 +31,38 @@ architecture rtl of hash_table_rtl is
     signal slv32_hash_table_rd_data_1      : std_logic_vector(ACL_HASH_TABLE_M9K_LENGTH - 1 downto 0) := (others => '0');
     signal slv32_hash_table_rd_data_0      : std_logic_vector(ACL_HASH_TABLE_M9K_LENGTH - 1 downto 0) := (others => '0');
 
-    signal slv32_hash_table_wr_data_3 : std_logic_vector(ACL_HASH_TABLE_M9K_LENGTH - 1 downto 0) := (others => '0');
-    signal slv32_hash_table_wr_data_2 : std_logic_vector(ACL_HASH_TABLE_M9K_LENGTH - 1 downto 0) := (others => '0');
-    signal slv32_hash_table_wr_data_1 : std_logic_vector(ACL_HASH_TABLE_M9K_LENGTH - 1 downto 0) := (others => '0');
-    signal slv32_hash_table_wr_data_0 : std_logic_vector(ACL_HASH_TABLE_M9K_LENGTH - 1 downto 0) := (others => '0');
+    -- signal slv32_hash_table_wr_data_3 : std_logic_vector(ACL_HASH_TABLE_M9K_LENGTH - 1 downto 0) := (others => '0');
+    -- signal slv32_hash_table_wr_data_2 : std_logic_vector(ACL_HASH_TABLE_M9K_LENGTH - 1 downto 0) := (others => '0');
+    -- signal slv32_hash_table_wr_data_1 : std_logic_vector(ACL_HASH_TABLE_M9K_LENGTH - 1 downto 0) := (others => '0');
+    -- signal slv32_hash_table_wr_data_0 : std_logic_vector(ACL_HASH_TABLE_M9K_LENGTH - 1 downto 0) := (others => '0');
 begin
-    slv32_hash_table_wr_data_3 <= pilv128_hash_wr_value(ACL_HASH_TABLE_M9K_LENGTH * 4 - 1 downto ACL_HASH_TABLE_M9K_LENGTH * 3);
-    slv32_hash_table_wr_data_2 <= pilv128_hash_wr_value(ACL_HASH_TABLE_M9K_LENGTH * 3 - 1 downto ACL_HASH_TABLE_M9K_LENGTH * 2);
-    slv32_hash_table_wr_data_1 <= pilv128_hash_wr_value(ACL_HASH_TABLE_M9K_LENGTH * 2 - 1 downto ACL_HASH_TABLE_M9K_LENGTH * 1);
-    slv32_hash_table_wr_data_0 <= pilv128_hash_wr_value(ACL_HASH_TABLE_M9K_LENGTH * 1 - 1 downto 0);
-
+    --    slv32_hash_table_wr_data_3 <= pilv128_hash_wr_value(ACL_HASH_TABLE_M9K_LENGTH * 4 - 1 downto ACL_HASH_TABLE_M9K_LENGTH * 3);
+    --    slv32_hash_table_wr_data_2 <= pilv128_hash_wr_value(ACL_HASH_TABLE_M9K_LENGTH * 3 - 1 downto ACL_HASH_TABLE_M9K_LENGTH * 2);
+    --    slv32_hash_table_wr_data_1 <= pilv128_hash_wr_value(ACL_HASH_TABLE_M9K_LENGTH * 2 - 1 downto ACL_HASH_TABLE_M9K_LENGTH * 1);
+    --    slv32_hash_table_wr_data_0 <= pilv128_hash_wr_value(ACL_HASH_TABLE_M9K_LENGTH * 1 - 1 downto 0);
+    --
     polv128_hash_rd_value <= slv32_hash_table_rd_data_3 &
-        slv32_hash_table_rd_data_2 &
-        slv32_hash_table_rd_data_1 &
-        slv32_hash_table_rd_data_0;
+    slv32_hash_table_rd_data_2 &
+    slv32_hash_table_rd_data_1 &
+    slv32_hash_table_rd_data_0;
 
-    process (pil_clk, pil_hash_wr_en)
+    process (pil_clk)
     begin
         if rising_edge(pil_clk) then
-            if (pil_hash_wr_en = '1') then
-
-                sarr256lv32_hash_table_memory_3(to_integer(unsigned(pilv8_hash_table_wr_addr))) <= slv32_hash_table_wr_data_3;
-                sarr256lv32_hash_table_memory_2(to_integer(unsigned(pilv8_hash_table_wr_addr))) <= slv32_hash_table_wr_data_2;
-                sarr256lv32_hash_table_memory_1(to_integer(unsigned(pilv8_hash_table_wr_addr))) <= slv32_hash_table_wr_data_1;
-                sarr256lv32_hash_table_memory_0(to_integer(unsigned(pilv8_hash_table_wr_addr))) <= slv32_hash_table_wr_data_0;
-
-            end if;
+            --    if (pil_hash_wr_en = '1') then
+            --
+            --        sarr256lv32_hash_table_memory_3(to_integer(unsigned(pilv8_hash_table_wr_addr))) <= slv32_hash_table_wr_data_3;
+            --        sarr256lv32_hash_table_memory_2(to_integer(unsigned(pilv8_hash_table_wr_addr))) <= slv32_hash_table_wr_data_2;
+            --        sarr256lv32_hash_table_memory_1(to_integer(unsigned(pilv8_hash_table_wr_addr))) <= slv32_hash_table_wr_data_1;
+            --        sarr256lv32_hash_table_memory_0(to_integer(unsigned(pilv8_hash_table_wr_addr))) <= slv32_hash_table_wr_data_0;
+            --
+            --    end if;
             if (pil_hash_rd_en = '1') then
                 slv32_hash_table_rd_data_3 <= sarr256lv32_hash_table_memory_3(to_integer(unsigned(pilv8_hash_table_rd_addr)));
                 slv32_hash_table_rd_data_2 <= sarr256lv32_hash_table_memory_2(to_integer(unsigned(pilv8_hash_table_rd_addr)));
                 slv32_hash_table_rd_data_1 <= sarr256lv32_hash_table_memory_1(to_integer(unsigned(pilv8_hash_table_rd_addr)));
                 slv32_hash_table_rd_data_0 <= sarr256lv32_hash_table_memory_0(to_integer(unsigned(pilv8_hash_table_rd_addr)));
-            else
+                else
 
             end if;
         end if;

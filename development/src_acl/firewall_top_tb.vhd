@@ -63,11 +63,11 @@ begin
                 vn_options_word_length := natural(rand_real(real(ACL_STATIC_IP_OPTIONS_MIN_LENGTH_WORDS), real(ACL_STATIC_IP_OPTIONS_MAX_LENGTH_WORDS)));
                 sl_gmii_rx_en <= '1';
                 for index_ip_header in ACL_STATIC_IP_HEADER_LENGTH_BYTES - 1 downto 0 loop
-                    slv8_gmii_rxd <= get_lv_byte_ip_header(vrec_packet,index_ip_header);
+                    slv8_gmii_rxd <= get_lv_byte_ip_header(vrec_packet, index_ip_header);
                     clock_procedure;
                 end loop;
                 for index_ip_options in vn_options_word_length - 1 downto 0 loop
-                    slv8_gmii_rxd <= get_lv_byte_ip_options(vrec_packet,index_ip_options);
+                    slv8_gmii_rxd <= get_lv_byte_ip_options(vrec_packet, index_ip_options);
                     clock_procedure;
                 end loop;
                 for index_tcp_header in ACL_STATIC_TCP_HEADER_LENGTH_BYTES - 1 downto 0 loop

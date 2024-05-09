@@ -16,13 +16,12 @@ entity header_extraction_rtl is
         pil_gmii_enable : in std_logic;
 
         -- header extractor output
-        polv8_acl_data         : out std_logic_vector(ACL_DATA_BUS_LENGTH - 1 downto 0);
-        pol_acl_valid_field    : out std_logic;
-        pol_acl_start_of_tuple : out std_logic;
+        polv8_acl_data      : out std_logic_vector(ACL_DATA_BUS_LENGTH - 1 downto 0);
+        pol_acl_valid_field : out std_logic;
 
         -- FIFO output
         polv8_fifo_data : out std_logic_vector(ACL_DATA_BUS_LENGTH - 1 downto 0);
-        pol_fifo_rd_en  : out std_logic
+        pol_fifo_wr_en  : out std_logic
 
     );
 end entity header_extraction_rtl;
@@ -31,19 +30,29 @@ architecture rtl of header_extraction_rtl is
     type header_ext_states_t is (header_ext_fsm_state_idle, header_ext_fsm_state_load_ipv4, header_ext_fsm_state_load_tcp);
     signal fsm_state_header_ext, fsm_state_header_ext_next : header_ext_states_t := header_ext_fsm_state_idle;
 
-    signal sarr2lv4_header_ext_ipv4_valid_fields : std_logic_vector(ACL_IPV4_HEADER_BYTES - 1 downto 0) := (x"004FF");
-    signal sarr2lv4_header_ext_tcp_valid_fields  : std_logic_vector(ACL_TCP_HEADER_BYTES - 1 downto 0)  := (x"F");
+    attribute dont_touch                              : string;
+    attribute dont_touch of fsm_state_header_ext      : signal is "true";
+    attribute dont_touch of fsm_state_header_ext_next : signal is "true";
+    attribute enum_encoding                           : string;
+    attribute enum_encoding of header_ext_states_t    : type is "gray"; -- encoding style of the enumerated type
+    signal sarr2lv4_header_ext_ipv4_valid_fields      : std_logic_vector(ACL_IPV4_HEADER_BYTES - 1 downto 0) := (x"004FF");
+    signal sarr2lv4_header_ext_tcp_valid_fields       : std_logic_vector(ACL_TCP_HEADER_BYTES - 1 downto 0)  := (x"F");
 
-    signal si_header_ext_byte_counter, si_header_ext_byte_counter_next : integer range 0 to ACL_HEADER_BYTE_COUNTER - 1       := 0;
-    signal slv4_header_ipv4_length, slv4_header_ipv4_length_next       : std_logic_vector(ACL_IPV4_HEADER_BYTES - 1 downto 0) := (others => '0');
+    signal si_header_ext_byte_counter, si_header_ext_byte_counter_next : integer range 0 to ACL_HEADER_BYTE_COUNTER - 1          := 0;
+    signal slv4_header_ipv4_length, slv4_header_ipv4_length_next       : std_logic_vector(ACL_IP_HEADER_IHL_LENGTH - 1 downto 0) := (others => '0');
 
     signal sl_gmii_header_start, sl_gmii_header_start_next : std_logic := '0';
 
 begin
-
+    -- DATA OUT 
+    polv8_acl_data  <= pilv8_gmii_data;
+    polv8_fifo_data <= pilv8_gmii_data;
     next_state_process : process (
         fsm_state_header_ext,
         si_header_ext_byte_counter,
+        pilv8_gmii_data,
+        pil_gmii_enable,
+        sl_gmii_header_start,
         sarr2lv4_header_ext_ipv4_valid_fields,
         slv4_header_ipv4_length,
         sarr2lv4_header_ext_tcp_valid_fields
@@ -60,7 +69,7 @@ begin
                 if (pil_gmii_enable = '1' and sl_gmii_header_start = '0') then
                     fsm_state_header_ext_next       <= header_ext_fsm_state_load_ipv4;
                     si_header_ext_byte_counter_next <= si_header_ext_byte_counter + 1;
-                    slv4_header_ipv4_length_next    <= pilv8_gmii_data(3 downto 0) & "00"; -- evil word to byte conversion
+                    slv4_header_ipv4_length_next    <= pilv8_gmii_data(3 downto 0) & "00";
                     sl_gmii_header_start_next       <= '0';
                 end if;
             when header_ext_fsm_state_load_ipv4 =>
