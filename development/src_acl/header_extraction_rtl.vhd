@@ -37,7 +37,7 @@ architecture rtl of header_extraction_rtl is
     signal si_header_ext_byte_counter, si_header_ext_byte_counter_next : integer range 0 to ACL_HEADER_BYTE_COUNTER - 1       := 0;
     signal slv4_header_ipv4_length, slv4_header_ipv4_length_next       : std_logic_vector(ACL_IPV4_HEADER_BYTES - 1 downto 0) := (others => '0');
 
-    signal sl_gmii_header_start, sl_gmii_header_start_next : std_logic := 0;
+    signal sl_gmii_header_start, sl_gmii_header_start_next : std_logic := '0';
 
 begin
 
@@ -60,8 +60,8 @@ begin
                 if (pil_gmii_enable = '1' and sl_gmii_header_start = '0') then
                     fsm_state_header_ext_next       <= header_ext_fsm_state_load_ipv4;
                     si_header_ext_byte_counter_next <= si_header_ext_byte_counter + 1;
-                    slv4_header_ipv4_length_next    <= pilv8_gmii_data(3 downto 0) & "00";
-                    sl_gmii_header_start_next = '0';
+                    slv4_header_ipv4_length_next    <= pilv8_gmii_data(3 downto 0) & "00"; -- evil word to byte conversion
+                    sl_gmii_header_start_next       <= '0';
                 end if;
             when header_ext_fsm_state_load_ipv4 =>
                 pol_acl_valid_field             <= sarr2lv4_header_ext_ipv4_valid_fields(si_header_ext_byte_counter);

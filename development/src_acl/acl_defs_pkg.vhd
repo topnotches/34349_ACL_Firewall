@@ -3,7 +3,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
-
+use ieee.math_real.all;
 package acl_defs_pkg is
 
     -- Random constant naturals for general dev
@@ -40,9 +40,12 @@ package acl_defs_pkg is
     constant ACL_STATIC_IP_HEADER_LENGTH_BYTES : natural := ACL_STATIC_IP_HEADER_LENGTH_WORDS * 4;
     constant ACL_STATIC_IP_HEADER_LENGTH_BITS  : natural := ACL_STATIC_IP_HEADER_LENGTH_BYTES * 8;
 
-    constant ACL_STATIC_IP_OPTIONS_LENGTH_WORDS : natural := 10;
-    constant ACL_STATIC_IP_OPTIONS_LENGTH_BYTES : natural := ACL_STATIC_IP_OPTIONS_LENGTH_WORDS * 4;
-    constant ACL_STATIC_IP_OPTIONS_LENGTH_BITS  : natural := ACL_STATIC_IP_OPTIONS_LENGTH_BYTES * 8;
+    constant ACL_STATIC_IP_OPTIONS_MIN_LENGTH_WORDS      : natural := 0;
+    constant ACL_STATIC_IP_OPTIONS_MAX_LENGTH_WORDS      : natural := 10;
+    constant ACL_STATIC_IP_OPTIONS_MIN_LENGTH_WORDS_REAL : real    := 0;
+    constant ACL_STATIC_IP_OPTIONS_MAX_LENGTH_WORDS_REAL : real    := 10;
+    constant ACL_STATIC_IP_OPTIONS_LENGTH_BYTES          : natural := ACL_STATIC_IP_OPTIONS_MAX_LENGTH_WORDS * 4;
+    constant ACL_STATIC_IP_OPTIONS_LENGTH_BITS           : natural := ACL_STATIC_IP_OPTIONS_LENGTH_BYTES * 8;
 
     constant ACL_STATIC_TCP_HEADER_LENGTH_WORDS : natural := 5;
     constant ACL_STATIC_TCP_HEADER_LENGTH_BYTES : natural := ACL_STATIC_TCP_HEADER_LENGTH_WORDS * 4;
