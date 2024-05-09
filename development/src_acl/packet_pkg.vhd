@@ -1,14 +1,15 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+use work.acl_defs_pkg.all;
 
-package ip_packet_pkg is
-  type ip_header_rec is record
-    ip_header  : std_logic_vector(20 * 4 - 1 downto 0);
-    tcp_header : std_logic_vector(20 * 4 - 1 downto 0);
+package packet_pkg is
+  type package_header_rec is record
+    ip_header  : std_logic_vector(ACL_STATIC_IP_HEADER_LENGTH_BITS - 1 downto 0);
+    tcp_header : std_logic_vector(ACL_STATIC_TCP_HEADER_LENGTH_BITS - 1 downto 0);
   end record;
 
-  function init_ip_header_rec(
+  function init_package_header_rec(
     version          : std_logic_vector(4 - 1 downto 0),
     ihl              : std_logic_vector(4 - 1 downto 0),
     tos              : std_logic_vector(8 - 1 downto 0),
@@ -29,15 +30,17 @@ package ip_packet_pkg is
     window_size      : std_logic_vector(16 - 1 downto 0),
     checksum         : std_logic_vector(16 - 1 downto 0),
     urgent_pointer   : std_logic_vector(16 - 1 downto 0)
-  ) return ip_header_rec;
+  ) return package_header_rec;
 
   function slv_to_ip_header_rec(slv : std_logic_vector) return ip_header_rec;
 
-  function ip_header_rec_to_slv(d_if : ip_header_rec) return std_logic_vector;
+  function package_header_rec_to_slv(arg_header_rec : ip_header_rec) return std_logic_vector(ACL_STATIC_TOTAL_HEADER_LENGTH - 1 downto 0);
+  function ip_header_rec_to_slv(arg_header_rec      : ip_header_rec) return std_logic_vector(ACL_STATIC_IP_HEADER_LENGTH_BITS - 1 downto 0);
+  function tcp_header_rec_to_slv(arg_header_rec     : ip_header_rec) return std_logic_vector(ACL_STATIC_TCP_HEADER_LENGTH_BITS - 1 downto 0);
 
-end package ip_packet_pkg;
+end package packet_pkg;
 
-package body ip_packet_pkg is
+package body packet_pkg is
 
   function init_ip_header_rec(
     version          : std_logic_vector(4 - 1 downto 0),
@@ -83,4 +86,4 @@ package body ip_packet_pkg is
     return slv_result;
   end ip_header_rec_to_slv;
 
-end package body ip_packet_pkg;
+end package body packet_pkg;

@@ -2,7 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use ieee.math_real.all;
-
+use work.packet_pkg.all;
 entity firewall_top_tb is
 
 end entity firewall_top_tb;
@@ -15,11 +15,9 @@ architecture rtl of firewall_top_tb is
   signal slv8_gmii_txd : std_logic_vector(7 downto 0) := (others => '0');
   signal sl_gmii_tx_en : std_logic                    := '0';
   signal si_counter    : natural range 0 to 1023      := 0;
+  type arr255slv160_packet_stimuli_t is array natural range 0 to 255 of std_logic_vector(ACL_STATIC_IP_HEADER_LENGTH_BITS - 1 downto 0);
+  signal sarr255slv160_packet_stimuli : arr255slv160_packet_stimuli_t := (others => (others => '0'));
 
-  function <name> (<params>) return <type> is
-  begin
-    
-  end function;
 begin
 
   UUT_FIREWALL_TOP : entity work.firewall_top_rtl(rtl)

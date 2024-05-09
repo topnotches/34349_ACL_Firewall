@@ -26,6 +26,15 @@ package acl_defs_pkg is
   constant ACL_HEADER_BYTE_COUNTER : natural := ACL_MAX_HEADER_WORDS * ACL_BYTES_PER_WORD;
   constant ACL_IPV4_HEADER_BYTES   : natural := ACL_MIN_HEADER_WORDS * ACL_BYTES_PER_WORD;
   constant ACL_TCP_HEADER_BYTES    : natural := 4;
+
+  -- excluding options
+  constant ACL_STATIC_IP_HEADER_LENGTH_WORDS  : natural := 5;
+  constant ACL_STATIC_IP_HEADER_LENGTH_BYTES  : natural := ACL_STATIC_IP_HEADER_LENGTH_WORDS * 4;
+  constant ACL_STATIC_IP_HEADER_LENGTH_BITS   : natural := ACL_STATIC_IP_HEADER_LENGTH_BYTES * 8;
+  constant ACL_STATIC_TCP_HEADER_LENGTH_WORDS : natural := 5;
+  constant ACL_STATIC_TCP_HEADER_LENGTH_BYTES : natural := ACL_STATIC_TCP_HEADER_LENGTH_WORDS * 4;
+  constant ACL_STATIC_TCP_HEADER_LENGTH_BITS  : natural := ACL_STATIC_TCP_HEADER_LENGTH_BYTES * 8;
+  constant ACL_STATIC_TOTAL_HEADER_LENGTH     : natural := ACL_STATIC_IP_HEADER_LENGTH_BITS + ACL_STATIC_TCP_HEADER_LENGTH_BITS;
 end package acl_defs_pkg;
 
 package body acl_defs_pkg is
