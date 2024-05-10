@@ -12,8 +12,9 @@ package packet_pkg is
 
     function init_packet_header_rec_zero return packet_header_rec;
     function init_packet_header_rec(
-        version : std_logic_vector(ACL_NIBBLE_LENGTH - 1 downto 0);
 
+        -- ip header
+        version          : std_logic_vector(ACL_NIBBLE_LENGTH - 1 downto 0);
         ihl              : std_logic_vector(ACL_NIBBLE_LENGTH - 1 downto 0);
         tos              : std_logic_vector(ACL_BYTE_LENGTH - 1 downto 0);
         total_length     : std_logic_vector(ACL_HALFWORD_LENGTH - 1 downto 0);
@@ -24,15 +25,21 @@ package packet_pkg is
         head_checksum    : std_logic_vector(ACL_HALFWORD_LENGTH - 1 downto 0);
         src_addr         : std_logic_vector(ACL_WORD_LENGTH - 1 downto 0);
         dest_addr        : std_logic_vector(ACL_WORD_LENGTH - 1 downto 0);
-        src_port         : std_logic_vector(ACL_HALFWORD_LENGTH - 1 downto 0);
-        dest_port        : std_logic_vector(ACL_HALFWORD_LENGTH - 1 downto 0);
-        seq_num          : std_logic_vector(ACL_WORD_LENGTH - 1 downto 0);
-        ack_num          : std_logic_vector(ACL_WORD_LENGTH - 1 downto 0);
-        reserved         : std_logic_vector(ACL_BYTE_LENGTH - 1 downto 0);
-        flags            : std_logic_vector(ACL_BYTE_LENGTH - 1 downto 0);
-        window_size      : std_logic_vector(ACL_HALFWORD_LENGTH - 1 downto 0);
-        checksum         : std_logic_vector(ACL_HALFWORD_LENGTH - 1 downto 0);
-        urgent_pointer   : std_logic_vector(ACL_HALFWORD_LENGTH - 1 downto 0)
+
+        -------------
+        -- OPTIONS --
+        -------------
+
+        -- tcp header
+        src_port       : std_logic_vector(ACL_HALFWORD_LENGTH - 1 downto 0);
+        dest_port      : std_logic_vector(ACL_HALFWORD_LENGTH - 1 downto 0);
+        seq_num        : std_logic_vector(ACL_WORD_LENGTH - 1 downto 0);
+        ack_num        : std_logic_vector(ACL_WORD_LENGTH - 1 downto 0);
+        reserved       : std_logic_vector(ACL_BYTE_LENGTH - 1 downto 0);
+        flags          : std_logic_vector(ACL_BYTE_LENGTH - 1 downto 0);
+        window_size    : std_logic_vector(ACL_HALFWORD_LENGTH - 1 downto 0);
+        checksum       : std_logic_vector(ACL_HALFWORD_LENGTH - 1 downto 0);
+        urgent_pointer : std_logic_vector(ACL_HALFWORD_LENGTH - 1 downto 0)
     ) return packet_header_rec;
     function packet_header_rec_to_lv(arg_packet_header_rec : packet_header_rec) return std_logic_vector;
 

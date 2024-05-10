@@ -35,11 +35,11 @@ architecture rtl of header_extraction_rtl is
     attribute dont_touch of fsm_state_header_ext_next : signal is "true";
     attribute enum_encoding                           : string;
     attribute enum_encoding of header_ext_states_t    : type is "gray"; -- encoding style of the enumerated type
-    signal sarr2lv4_header_ext_ipv4_valid_fields      : std_logic_vector(ACL_IPV4_HEADER_BYTES - 1 downto 0) := (x"004FF");
-    signal sarr2lv4_header_ext_tcp_valid_fields       : std_logic_vector(ACL_TCP_HEADER_BYTES - 1 downto 0)  := (x"F");
+    signal slv20_header_ext_ipv4_valid_fields         : std_logic_vector(ACL_IPV4_HEADER_BYTES - 1 downto 0) := (x"004FF");
+    signal slv4_header_ext_tcp_valid_fields           : std_logic_vector(ACL_TCP_HEADER_BYTES - 1 downto 0)  := (x"F");
 
-    signal si_header_ext_byte_counter, si_header_ext_byte_counter_next : integer range 0 to ACL_HEADER_BYTE_COUNTER - 1          := 0;
-    signal slv4_header_ipv4_length, slv4_header_ipv4_length_next       : std_logic_vector(ACL_IP_HEADER_IHL_LENGTH - 1 downto 0) := (others => '0');
+    signal si_header_ext_byte_counter, si_header_ext_byte_counter_next : integer range 0 to ACL_HEADER_BYTE_COUNTER - 1                 := 0;
+    signal slv6_header_ipv4_length, slv6_header_ipv4_length_next       : std_logic_vector(ACL_IP_HEADER_EXT_IHL_LV_LENGTH - 1 downto 0) := (others => '0');
 
     signal sl_gmii_header_start, sl_gmii_header_start_next : std_logic := '0';
 
@@ -53,15 +53,15 @@ begin
         pilv8_gmii_data,
         pil_gmii_enable,
         sl_gmii_header_start,
-        sarr2lv4_header_ext_ipv4_valid_fields,
-        slv4_header_ipv4_length,
-        sarr2lv4_header_ext_tcp_valid_fields
+        slv20_header_ext_ipv4_valid_fields,
+        slv6_header_ipv4_length,
+        slv4_header_ext_tcp_valid_fields
         )
     begin
         pol_acl_valid_field             <= '0';
         fsm_state_header_ext_next       <= fsm_state_header_ext;
         si_header_ext_byte_counter_next <= si_header_ext_byte_counter;
-        slv4_header_ipv4_length_next    <= slv4_header_ipv4_length;
+        slv6_header_ipv4_length_next    <= slv6_header_ipv4_length;
         sl_gmii_header_start_next       <= sl_gmii_header_start;
         case fsm_state_header_ext is
 
@@ -69,19 +69,19 @@ begin
                 if (pil_gmii_enable = '1' and sl_gmii_header_start = '0') then
                     fsm_state_header_ext_next       <= header_ext_fsm_state_load_ipv4;
                     si_header_ext_byte_counter_next <= si_header_ext_byte_counter + 1;
-                    slv4_header_ipv4_length_next    <= pilv8_gmii_data(3 downto 0) & "00";
+                    slv6_header_ipv4_length_next    <= pilv8_gmii_data(3 downto 0) & "00";
                     sl_gmii_header_start_next       <= '0';
                 end if;
             when header_ext_fsm_state_load_ipv4 =>
-                pol_acl_valid_field             <= sarr2lv4_header_ext_ipv4_valid_fields(si_header_ext_byte_counter);
+                pol_acl_valid_field             <= slv20_header_ext_ipv4_valid_fields(si_header_ext_byte_counter);
                 si_header_ext_byte_counter_next <= si_header_ext_byte_counter + 1;
-                if (slv4_header_ipv4_length = std_logic_vector(to_unsigned(si_header_ext_byte_counter, slv4_header_ipv4_length'length))) then
+                if (slv6_header_ipv4_length = std_logic_vector(to_unsigned(si_header_ext_byte_counter, slv6_header_ipv4_length'length))) then
                     fsm_state_header_ext_next       <= header_ext_fsm_state_load_tcp;
                     si_header_ext_byte_counter_next <= 0;
                 end if;
             when header_ext_fsm_state_load_tcp =>
 
-                pol_acl_valid_field             <= sarr2lv4_header_ext_tcp_valid_fields(si_header_ext_byte_counter);
+                pol_acl_valid_field             <= slv4_header_ext_tcp_valid_fields(si_header_ext_byte_counter);
                 si_header_ext_byte_counter_next <= si_header_ext_byte_counter + 1;
 
                 if (si_header_ext_byte_counter = 3) then
@@ -101,12 +101,12 @@ begin
             if (pil_rst = '1') then
                 fsm_state_header_ext       <= header_ext_fsm_state_idle;
                 si_header_ext_byte_counter <= 0;
-                slv4_header_ipv4_length    <= (others => '0');
+                slv6_header_ipv4_length    <= (others => '0');
                 sl_gmii_header_start       <= '0';
             else
                 fsm_state_header_ext       <= fsm_state_header_ext_next;
                 si_header_ext_byte_counter <= si_header_ext_byte_counter_next;
-                slv4_header_ipv4_length    <= slv4_header_ipv4_length_next;
+                slv6_header_ipv4_length    <= slv6_header_ipv4_length_next;
                 sl_gmii_header_start       <= sl_gmii_header_start_next;
             end if;
 

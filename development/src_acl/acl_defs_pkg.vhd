@@ -10,7 +10,7 @@ package acl_defs_pkg is
     constant ACL_BIT_LENGTH      : natural := 1;
     constant ACL_NIBBLE_LENGTH   : natural := 4;
     constant ACL_BYTE_LENGTH     : natural := 8;
-    constant ACL_HALFWORD_LENGTH : natural := 32;
+    constant ACL_HALFWORD_LENGTH : natural := 16;
     constant ACL_WORD_LENGTH     : natural := 32;
     constant ACL_LONG_LENGTH     : natural := 64;
 
@@ -27,14 +27,14 @@ package acl_defs_pkg is
     constant ACL_HASH_TABLE_ADDRESS_LENGTH  : natural := 128;
 
     -- TUPLE COUNTER INITS
-    constant ACL_MIN_HEADER_WORDS     : natural := 5;
-    constant ACL_MAX_HEADER_WORDS     : natural := 15;
-    constant ACL_TUPLE_COUNTER_ZERO   : natural := 0;
-    constant ACL_TUPLE_COUNTER_INIT   : natural := 13;
-    constant ACL_HEADER_BYTE_COUNTER  : natural := ACL_MAX_HEADER_WORDS * ACL_BYTES_PER_WORD;
-    constant ACL_IPV4_HEADER_BYTES    : natural := ACL_MIN_HEADER_WORDS * ACL_BYTES_PER_WORD;
-    constant ACL_TCP_HEADER_BYTES     : natural := 4;
-    constant ACL_IP_HEADER_IHL_LENGTH : natural := 6;
+    constant ACL_MIN_HEADER_WORDS            : natural := 5;
+    constant ACL_MAX_HEADER_WORDS            : natural := 15;
+    constant ACL_TUPLE_COUNTER_ZERO          : natural := 0;
+    constant ACL_TUPLE_COUNTER_INIT          : natural := 13;
+    constant ACL_HEADER_BYTE_COUNTER         : natural := ACL_MAX_HEADER_WORDS * ACL_BYTES_PER_WORD;
+    constant ACL_IPV4_HEADER_BYTES           : natural := ACL_MIN_HEADER_WORDS * ACL_BYTES_PER_WORD;
+    constant ACL_TCP_HEADER_BYTES            : natural := 4;
+    constant ACL_IP_HEADER_EXT_IHL_LV_LENGTH : natural := 6;
 
     constant ACL_STATIC_IP_HEADER_LENGTH_WORDS : natural := 5;
     constant ACL_STATIC_IP_HEADER_LENGTH_BYTES : natural := ACL_STATIC_IP_HEADER_LENGTH_WORDS * 4;
