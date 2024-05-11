@@ -48,7 +48,8 @@ architecture rtl of acl_fsm_rtl is
         state_acl_fsm_load_hash_address,
         state_acl_fsm_assert_rule,
         state_acl_fsm_do_action_block,
-        state_acl_fsm_do_action_permit
+        state_acl_fsm_do_action_permit,
+        state_acl_fsm_done
     );
 
     attribute enum_encoding                    : string;
@@ -82,7 +83,7 @@ begin
 
         if (to_integer(unsigned(slv104_rule_xor)) = 0) then
             sl_rule_hit <= '0';
-            else
+        else
             sl_rule_hit <= '1';
         end if;
 
@@ -109,7 +110,7 @@ begin
 
         if (si_tuple_counter = 0) then
             sl_counter_is_zero <= '0';
-            else
+        else
             sl_counter_is_zero <= '1';
         end if;
 
@@ -157,7 +158,7 @@ begin
 
                     si_tuple_counter_next <= si_tuple_counter - 1;
 
-                    sif_hash.lv8_data <= slv8_data;
+                    sif_hash.lv8_data <= pilv8_data;
                     sif_hash.l_first  <= '1';
                 end if;
 
@@ -166,7 +167,7 @@ begin
                 if (pil_valid = '1') then
                     slv104_tuple_next(si_tuple_counter * ACL_DATA_BUS_LENGTH + ACL_DATA_BUS_LENGTH - 1 downto si_tuple_counter * ACL_DATA_BUS_LENGTH) <= pilv8_data;
 
-                    sif_hash.lv8_data <= slv8_data;
+                    sif_hash.lv8_data <= pilv8_data;
 
                     if (sl_counter_is_zero = '1') then
                         si_tuple_counter_next <= si_tuple_counter - 1;
@@ -204,11 +205,18 @@ begin
             when state_acl_fsm_do_action_block =>
 
                 pol_block           <= '1';
-                sstate_acl_fsm_next <= state_acl_fsm_idle;
+                sstate_acl_fsm_next <= state_acl_fsm_done;
 
             when state_acl_fsm_do_action_permit =>
+                sstate_acl_fsm_next <= state_acl_fsm_done;
 
-                sstate_acl_fsm_next <= state_acl_fsm_idle;
+            when state_acl_fsm_done =>
+
+                slv104_tuple_next       <= (others => '0');
+                si_tuple_counter_next   <= ACL_TUPLE_COUNTER_INIT - 1;
+                slv8_hash_address_next  <= (others => '0');
+                slv104_tuple_table_next <= (others => '0');
+                sstate_acl_fsm_next     <= state_acl_fsm_idle;
 
             when others =>
 
@@ -234,7 +242,7 @@ begin
                 slv8_hash_address  <= (others => '0');
                 slv104_tuple_table <= (others => '0');
                 slv8_data          <= (others => '0');
-                else
+            else
                 sstate_acl_fsm     <= sstate_acl_fsm_next;
                 slv104_tuple       <= slv104_tuple_next;
                 si_tuple_counter   <= si_tuple_counter_next;

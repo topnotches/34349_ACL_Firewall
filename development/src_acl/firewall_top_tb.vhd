@@ -48,16 +48,16 @@ architecture rtl of firewall_top_tb is
     );
     -- INPUT STIM VECTORS
     signal sarr10lv4_ihl_stim : arr10lv4_nibble_header_stim_t := (
-    x"0",
-    x"0",
-    x"0",
-    x"0",
-    x"0",
-    x"0",
-    x"0",
-    x"0",
-    x"0",
-    x"0"
+    x"5",
+    x"5",
+    x"5",
+    x"5",
+    x"5",
+    x"5",
+    x"5",
+    x"5",
+    x"5",
+    x"5"
     );
     signal sarr10lv8_protocol_stim : arr10lv8_byte_header_stim_t := (
     x"3F",
@@ -159,13 +159,13 @@ begin
             end function;
             procedure clock_procedure is
             begin
-                wait for 1 ns;
                 sl_clk <= '1';
                 wait for 1 ns;
                 sl_clk <= '0';
+                wait for 1 ns;
             end procedure;
 
-            impure function set_header_stim(index : natural) return packet_header_rec is
+            impure function set_header_stim(index, options : natural) return packet_header_rec is
 
             begin
 
@@ -173,7 +173,7 @@ begin
 
                 -- ip header
                 CLV4_NIBBLE_ZEROS,
-                sarr10lv4_ihl_stim(index),
+                std_logic_vector(to_unsigned(options + 5, 4)),
                 CLV8_BYTE_ZEROS,
                 CLV16_HALFWORD_ZEROS,
                 CLV16_HALFWORD_ZEROS,
@@ -198,15 +198,16 @@ begin
         begin
             wait until sl_rst = '0';
             for index_ip_packet in 0 to N_PACKETS - 1 loop
-                vn_options_word_length := natural(rand_real(real(ACL_STATIC_IP_OPTIONS_MIN_LENGTH_WORDS), real(ACL_STATIC_IP_OPTIONS_MAX_LENGTH_WORDS)));
-                vrec_packet            := set_header_stim(index_ip_packet);
-                sl_gmii_rx_en <= '1';
-                clock_procedure;
+                --vn_options_word_length := natural(rand_real(real(ACL_STATIC_IP_OPTIONS_MIN_LENGTH_WORDS), real(ACL_STATIC_IP_OPTIONS_MAX_LENGTH_WORDS)));
+                vn_options_word_length := 1;
+                vrec_packet            := set_header_stim(index_ip_packet, natural(vn_options_word_length));
                 for index_ip_header in ACL_STATIC_IP_HEADER_LENGTH_BYTES - 1 downto 0 loop
+
+                    sl_gmii_rx_en <= '1';
                     slv8_gmii_rxd <= get_lv_byte_ip_header(vrec_packet, index_ip_header);
                     clock_procedure;
                 end loop;
-                for index_ip_options in vn_options_word_length - 1 downto 0 loop
+                for index_ip_options in vn_options_word_length * 4 - 1 downto 0 loop
                     slv8_gmii_rxd <= get_lv_byte_ip_options(vrec_packet, index_ip_options);
                     clock_procedure;
                 end loop;

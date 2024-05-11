@@ -83,6 +83,7 @@ package body packet_pkg is
         variable init_data : packet_header_rec;
     begin
         init_data.ip_header  := version & ihl & tos & total_length & id & flags_n_frags_os & ttl & protocol & head_checksum & src_addr & dest_addr;
+        init_data.ip_options := (others => '0');
         init_data.tcp_header := src_port & dest_port & seq_num & ack_num & reserved & flags & window_size & checksum & urgent_pointer;
         return init_data;
     end function init_packet_header_rec;
