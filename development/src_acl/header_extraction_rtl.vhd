@@ -69,7 +69,7 @@ begin
         case fsm_state_header_ext is
 
             when header_ext_fsm_state_idle =>
-                if (pil_gmii_enable) then
+                if (pil_gmii_enable = '0') then
                     sl_gmii_header_start_next <= '0';
                 end if;
                 if (pil_gmii_enable = '1' and sl_gmii_header_start = '0') then
@@ -98,7 +98,9 @@ begin
                 si_header_ext_byte_counter_next <= si_header_ext_byte_counter + 1;
 
                 if (si_header_ext_byte_counter = 3) then
-                    fsm_state_header_ext_next <= header_ext_fsm_state_idle;
+                    fsm_state_header_ext_next       <= header_ext_fsm_state_idle;
+                    si_header_ext_byte_counter_next <= 0;
+                    slv6_header_ipv4_length_next    <= (others => '0');
                 end if;
             when others =>
                 fsm_state_header_ext_next <= header_ext_fsm_state_idle;

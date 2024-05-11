@@ -21,8 +21,8 @@ architecture rtl of hash_rtl is
 
     type hash_state_t is (hash_state_idle, hash_state_gen_hash, hash_state_hash_final, hash_state_hash_done);
 
-    signal hash_state, hash_state_next : hash_state_t := hash_state_idle;
-
+    signal hash_state, hash_state_next           : hash_state_t := hash_state_idle;
+    signal sl_self_rst                           : std_logic    := '0';
     attribute dont_touch                         : string;
     attribute dont_touch of hash_state           : signal is "true";
     attribute dont_touch of hash_state_next      : signal is "true";
@@ -87,6 +87,7 @@ begin
         hash_state_next <= hash_state;
         polv8_hash      <= (others => '0');
         pol_hash_rdy    <= '0';
+        sl_self_rst     <= '0';
 
         case hash_state is
 
@@ -105,12 +106,12 @@ begin
             when hash_state_hash_final =>
 
                 hash_state_next <= hash_state_hash_done;
-
             when hash_state_hash_done =>
 
                 hash_state_next <= hash_state_idle;
                 polv8_hash      <= slv8_hash_value;
                 pol_hash_rdy    <= '1';
+                sl_self_rst     <= '1';
 
             when others =>
 
@@ -129,10 +130,10 @@ begin
     begin
 
         if rising_edge(pil_clk) then
-            if (pil_rst = '1') then
+            if (pil_rst = '1' or sl_self_rst = '1') then
                 hash_state      <= hash_state_idle;
                 slv8_hash_value <= (others => '0');
-                elsif (pil_en) then
+            elsif (pil_en = '1' or hash_state = hash_state_hash_final) then
                 hash_state      <= hash_state_next;
                 slv8_hash_value <= slv8_hash_value_next;
             end if;

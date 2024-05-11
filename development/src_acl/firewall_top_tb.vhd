@@ -9,7 +9,7 @@ entity firewall_top_tb is
 end entity firewall_top_tb;
 
 architecture rtl of firewall_top_tb is
-    constant N_PACKETS   : natural                      := 10;
+    constant N_PACKETS   : natural                      := 5;
     signal sl_clk        : std_logic                    := '0';
     signal sl_rst        : std_logic                    := '1';
     signal slv8_gmii_rxd : std_logic_vector(7 downto 0) := (others => '0');
@@ -35,24 +35,14 @@ architecture rtl of firewall_top_tb is
 
     -- EXPECTED HASH VALUES:
     constant carr10lv8_stim_results : arr10lv8_stim_results_t := (
-    x"2E",
-    x"E5",
-    x"B0",
-    x"5B",
-    x"20",
-    x"00",
-    x"00",
-    x"00",
-    x"00",
-    x"00"
+    x"E2",
+    x"C7",
+    x"5A",
+    x"AF",
+    x"18"
     );
     -- INPUT STIM VECTORS
     signal sarr10lv4_ihl_stim : arr10lv4_nibble_header_stim_t := (
-    x"5",
-    x"5",
-    x"5",
-    x"5",
-    x"5",
     x"5",
     x"5",
     x"5",
@@ -64,60 +54,35 @@ architecture rtl of firewall_top_tb is
     x"F2",
     x"69",
     x"42",
-    x"5B",
-    x"FE",
-    x"00",
-    x"00",
-    x"00",
-    x"00"
+    x"5B"
     );
     signal sarr10lv32_ip_src_addr_stim : arr10lv32_word_header_stim_t := (
     x"FFFFFFFF",
     x"01234567",
     x"69696969",
     x"42424242",
-    x"DCBA9876",
-    x"00000000",
-    x"00000000",
-    x"00000000",
-    x"00000000",
-    x"00000000"
+    x"DCBA9876"
     );
     signal sarr10lv32_ip_dest_addr_stim : arr10lv32_word_header_stim_t := (
     x"F1FFF1FF",
     x"89ABCDEF",
     x"69696969",
     x"42424242",
-    x"543210FF",
-    x"00000000",
-    x"00000000",
-    x"00000000",
-    x"00000000",
-    x"00000000"
+    x"543210FF"
     );
     signal sarr10lv16_port_src_addr_stim : arr10lv16_halfword_header_stim_t := (
     x"FFFF",
     x"0123",
     x"6969",
     x"4242",
-    x"0123",
-    x"0000",
-    x"0000",
-    x"0000",
-    x"0000",
-    x"0000"
+    x"0123"
     );
     signal sarr10lv16_port_dest_addr_stim : arr10lv16_halfword_header_stim_t := (
     x"FFFF",
     x"4567",
     x"6969",
     x"4242",
-    x"4567",
-    x"0000",
-    x"0000",
-    x"0000",
-    x"0000",
-    x"0000"
+    x"4567"
     );
 
     constant CLV4_NIBBLE_ZEROS    : std_logic_vector(ACL_NIBBLE_LENGTH - 1 downto 0)   := (others => '0');
@@ -146,7 +111,7 @@ begin
     begin
         process
             variable vn_options_word_length                    : natural range 0 to 10 := 0;
-            variable rand_packet_delay                         : natural               := 1;
+            variable rand_packet_delay                         : natural               := 8;
             variable vrec_packet                               : packet_header_rec     := init_packet_header_rec_zero;
             impure function rand_real(arg_min_val, arg_max_val : real) return real is
 
@@ -215,11 +180,14 @@ begin
                     slv8_gmii_rxd <= get_lv_byte_tcp_header(vrec_packet, index_tcp_header);
                     clock_procedure;
                 end loop;
-
                 sl_gmii_rx_en <= '0';
+
                 for index_packet_delay in 0 to rand_packet_delay loop
+                    slv8_gmii_rxd <= x"00";
+                    clock_procedure;
 
                 end loop;
+
                 clock_procedure;
             end loop;
         end process;
